@@ -18,3 +18,16 @@
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
+
+.idea
+/node_modules/
+/public/build/
+.DS_Store
+/public/uploads/
+
+### VS Code - Source : https://github.com/github/gitignore/blob/main/Global/VisualStudioCode.gitignore
+.vscode/*
+# Local History for Visual Studio Code
+.history/
+# Built Visual Studio Code Extensions
+*.vsix
