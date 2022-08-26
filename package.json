@@ -1,10 +1,19 @@
 {
-  "name": "handichiens-v2",
-  "private": true,
-  "version": "1.0.0",
-  "description": "Gestion des familles relais pour Handi'chiens Vineuil",
-
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  }
+    "devDependencies": {
+        "@hotwired/stimulus": "^3.0.0",
+        "@symfony/stimulus-bridge": "^3.2.0",
+        "@symfony/ux-live-component": "file:vendor/symfony/ux-live-component/assets",
+        "@symfony/webpack-encore": "^3.0.0",
+        "core-js": "^3.23.0",
+        "regenerator-runtime": "^0.13.9",
+        "webpack-notifier": "^1.15.0"
+    },
+    "license": "UNLICENSED",
+    "private": true,
+    "scripts": {
+        "dev-server": "encore dev-server",
+        "dev": "encore dev",
+        "watch": "encore dev --watch",
+        "build": "encore production --progress"
+    }
 }
