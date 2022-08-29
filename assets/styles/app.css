@@ -1,0 +1,70 @@
+/* POLICES */
+
+/* raleway-regular - latin */
+@font-face {
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../fonts/raleway-v28-latin-regular.eot'); /* IE9 Compat Modes */
+    src: local(''),
+         url('../fonts/raleway-v28-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('../fonts/raleway-v28-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+         url('../fonts/raleway-v28-latin-regular.woff') format('woff'), /* Modern Browsers */
+         url('../fonts/raleway-v28-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+         url('../fonts/raleway-v28-latin-regular.svg#Raleway') format('svg'); /* Legacy iOS */
+  }
+
+/* raleway-700 - latin */
+@font-face {
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    src: url('../fonts/raleway-v28-latin-700.eot'); /* IE9 Compat Modes */
+    src: local(''),
+         url('../fonts/raleway-v28-latin-700.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('../fonts/raleway-v28-latin-700.woff2') format('woff2'), /* Super Modern Browsers */
+         url('../fonts/raleway-v28-latin-700.woff') format('woff'), /* Modern Browsers */
+         url('../fonts/raleway-v28-latin-700.ttf') format('truetype'), /* Safari, Android, iOS */
+         url('../fonts/raleway-v28-latin-700.svg#Raleway') format('svg'); /* Legacy iOS */
+}
+
+/* VARIABLES */
+
+:root {
+    --bleu: #5EB6DE;
+    --noir: #000;
+    --blanc: #FFF;
+    --gris: #606060;
+}
+
+/* TYPOGRAPHIES */
+
+body {
+    font-family: Raleway, sans-serif;
+    line-height: 1.2;
+    font-weight: regular;
+    color: var(--noir);
+    background-color: var(--blanc);
+}
+
+.titre {
+    font-weight: bold;
+    font-size: 2.5rem;
+}
+
+/* COMPOSANTS */
+
+.navigation {
+    background-color: var(--gris);
+    color: var(--blanc);
+}
+
+/* LAYOUT */
+
+.main {
+    max-width: 85rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
