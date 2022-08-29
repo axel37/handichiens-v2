@@ -1,0 +1,70 @@
+
+/* Débuggueur CSS  */
+* {
+    /* outline: 1px solid red; */
+}
+
+/* Root font size equivalent à 10px pour simplifier les calculs */
+html {
+    font-size: .625em; /* fallback IE8+ */
+    font-size: calc(1em * .625); /* IE9-IE11 math fixing. See http://bit.ly/1g4X0bX */
+}
+
+/* Remove focus for mouse users */
+:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* Set core body defaults */
+body {
+    font-size: 1.6rem;
+}
+
+/* Set text selection color */
+::selection {
+    color: #000;
+    background-color: #fd0;
+}
+
+/* Set cursor pointer */
+label[for],
+button,
+input[type="submit"],
+select {
+    cursor: pointer;
+}
+
+/* Remove font style on address */
+address {
+    font-style: normal;
+}
+
+/* Text meant only for screen readers. */
+.screen-reader-text {
+    clip: rect(1px, 1px, 1px, 1px);
+    height: 1px;
+    overflow: hidden;
+    width: 1px;
+    position: absolute;
+    white-space: nowrap;
+}
+
+/* Image replacement technique 2012 H5BP  - https://css-tricks.com/the-image-replacement-museum/ */
+.ir {
+    font: 0/0 a;
+    color: transparent;
+    border: 0;
+    text-shadow: none;
+}
+
+
+/* Print external URLs */
+@media print {
+    a {
+        text-decoration: underline;
+    }
+
+    a[href]:not([href^='#'])::after {
+        content: '('attr(href)')';
+    }
+}
