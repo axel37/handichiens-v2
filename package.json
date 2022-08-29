@@ -5,6 +5,7 @@
         "@symfony/ux-live-component": "file:vendor/symfony/ux-live-component/assets",
         "@symfony/webpack-encore": "^3.0.0",
         "core-js": "^3.23.0",
+        "maildev": "^2.0.5",
         "regenerator-runtime": "^0.13.9",
         "webpack-notifier": "^1.15.0"
     },
@@ -15,5 +16,6 @@
         "dev": "encore dev",
         "watch": "encore dev --watch",
         "build": "encore production --progress"
-    }
+    },
+    "dependencies": {}
 }
