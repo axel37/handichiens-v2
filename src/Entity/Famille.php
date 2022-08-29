@@ -35,6 +35,16 @@ class Famille extends Utilisateur
         $this->disponibilites = new ArrayCollection();
     }
 
+    public function getRoles(): array
+    {
+        $roles = parent::getRoles();
+
+        // Une instance de Famille a automatiquement le rôle "ROLE_FAMILLE"
+        $roles[] = 'ROLE_FAMILLE';
+
+        return array_unique($roles);
+    }
+
     public function getAdresse(): ?string
     {
         return $this->adresse;
