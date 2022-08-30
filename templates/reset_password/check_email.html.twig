@@ -1,0 +1,13 @@
+{# Confirmation d'envoi du mail de réinitialisation #}
+
+{% extends 'disposition_standard.html.twig' %}
+
+{% block title %}Handi'Chiens - Réinitalisation envoyée !{% endblock %}
+
+{% block contenu %}
+    <p>
+        S'il existe bien un compte pour cette adresse email, nous y avons envoyé un message contenant un lien permettant de réinitialiser votre mot de passe.
+        Ce lien expirera dans {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
+    </p>
+    <p>Si vous n'avez pas reçu d'email, vérifiez dans les couriers indésirables <a href="{{ path('app_forgot_password_request') }}">réessayez</a>.</p>
+{% endblock %}
