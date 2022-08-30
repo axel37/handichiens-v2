@@ -15,7 +15,7 @@
                 {% if disponibilite.libelle is not null %}
                     {{ disponibilite.libelle ~ ' : ' }}
                 {% endif %}
-                {{ disponibilite.debut|date ~ ' - ' ~ disponibilite.fin|date }}
+                {{ disponibilite.debut|format_date ~ ' - ' ~ disponibilite.fin|format_date }}
             </li>
         {% endfor %}
     </ul>
