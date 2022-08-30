@@ -1,10 +1,34 @@
-<nav class=".navigation">
-	<a href="/" class=".navigation__accueil">
-		<img src="/" alt="logo accueil">
+<nav class="navigation" {{ stimulus_controller('menu') }}>
+	<a href="/" class="navigation__accueil">
+		<img class="navigation__accueil--logo" src="{{ asset('images/logo_handichiens.png') }}" alt="logo accueil">
 	</a>
-	<a href="/">Accueil</a>
-	<a href="/disponibilite">Mes Disponibilités</a>
-	<a href="/profil">Mon Profil</a>
 
-	<a href="/deconnexion">Déconnexion</a>
+	{# {% if app.user %} #}
+
+	<div class="menu__dropdown">
+		<button {{ stimulus_action('menu', 'toggleMenu')}}>
+			<img class="navigation__menu--toggle" src="{{ asset('images/menu.png') }}" alt="logo menu de navigation">
+		</button>
+
+		<div class="hidden" {{ stimulus_target('menu', 'menuList') }}>
+
+			<a class="navigation__lien" href="/">Accueil</a>
+
+			{% if is_granted('ROLE_ADMIN') %}
+				<a class="navigation__lien" href="/">Les Éducateurs</a>
+			{% endif %}
+			{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_EDUCATEUR') %}
+				<a class="navigation__lien" href="/">Les Chiens</a>
+				<a class="navigation__lien" href="/">Les Familles Relais</a>
+			{% elseif is_granted('ROLE_FAMILLE') %}
+				<a class="navigation__lien" href="/">Mes Disponibilités</a>
+			{% endif %}
+
+			<a class="navigation__lien" href="/profil">Mon Profil</a>
+			{{component('bouton', { type: 'principal', texte: 'Déconnexion' })}}
+		</div>
+
+	</div>
+
+	{# {% endif %} #}
 </nav>
