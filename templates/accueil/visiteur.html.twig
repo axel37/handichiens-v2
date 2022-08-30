@@ -1,0 +1,14 @@
+{% extends 'disposition_standard.html.twig' %}
+
+{% block title %}Handi'chiens - Accueil{% endblock %}
+
+{% block contenu %}
+
+    <p>Bienvenue sur Handi'chiens v2, l'application de gestion de Handi'chiens Vineuil.</p>
+
+    <p>Vous n'êtes pas authentifié. <a href="{{ path('app_connexion') }}">Se connecter.</a></p>
+
+    <pre>User :</pre>
+    {{ dump(app.user) }}
+
+{% endblock %}
