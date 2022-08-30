@@ -7,17 +7,22 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: FamilleRepository::class)]
 class Famille extends Utilisateur
 {
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     private ?string $adresse = null;
 
     #[ORM\Column(length: 125)]
+    #[Assert\NotBlank]
     private ?string $ville = null;
 
     #[ORM\Column(length: 5)]
+    #[Assert\NotBlank]
+    #[Assert\Length(5)]
     private ?string $codePostal = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -33,6 +38,11 @@ class Famille extends Utilisateur
     {
         $this->affectations = new ArrayCollection();
         $this->disponibilites = new ArrayCollection();
+    }
+
+    public function __toString() : string
+    {
+        return $this->getNom();
     }
 
     public function getRoles(): array
@@ -152,4 +162,5 @@ class Famille extends Utilisateur
 
         return $this;
     }
+
 }

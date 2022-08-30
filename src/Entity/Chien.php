@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ChienRepository::class)]
 class Chien
@@ -19,12 +20,18 @@ class Chien
     private ?int $id = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank]
     private ?string $nom = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
+    #[Assert\NotBlank]
+    #[Assert\LessThan(
+        value: 'today'
+        )]
     private ?\DateTimeImmutable $dateNaissance = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank]
     private ?string $race = null;
 
     #[ORM\OneToMany(mappedBy: 'chien', targetEntity: Affectation::class)]
@@ -33,6 +40,11 @@ class Chien
     public function __construct()
     {
         $this->affectations = new ArrayCollection();
+    }
+
+    public function __toString() : string
+    {
+        return $this->getNom();
     }
 
     public function getId(): ?int
@@ -105,4 +117,5 @@ class Chien
 
         return $this;
     }
+
 }
