@@ -1,0 +1,14 @@
+{% extends 'disposition_standard.html.twig' %}
+
+{% block title %}Handi'chiens - Éducateur{% endblock %}
+
+{% block contenu %}
+
+    <p>Vous êtes connecté en tant qu'éducateur.</p>
+
+    <p><a href="{{ path('app_deconnexion') }}">Se déconnecter.</a></p>
+
+    <pre>User :</pre>
+    {{ dump(app.user) }}
+
+{% endblock %}
