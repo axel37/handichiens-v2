@@ -21,10 +21,6 @@ class Chien
 
     #[ORM\Column(length: 100)]
     #[Assert\NotBlank]
-    #[Assert\Length(
-        min: 2,
-        minMessage: 'Votre chien a sûrement un nom différent de {{value}}'
-    )]
     private ?string $nom = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
@@ -36,9 +32,6 @@ class Chien
 
     #[ORM\Column(length: 100)]
     #[Assert\NotBlank]
-    #[Assert\Length(
-        min: 2
-        )]
     private ?string $race = null;
 
     #[ORM\OneToMany(mappedBy: 'chien', targetEntity: Affectation::class)]

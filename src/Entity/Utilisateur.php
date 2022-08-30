@@ -47,8 +47,6 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $prenom = null;
 
     #[ORM\Column(length: 25, nullable: true)]
-    #[Assert\Regex('/\d{10}/',
-    message: "{{value}} n'est pas un numéro de téléphone valide.")]
     private ?string $telephone = null;
 
     public function getId(): ?int

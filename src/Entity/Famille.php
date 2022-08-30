@@ -22,8 +22,7 @@ class Famille extends Utilisateur
 
     #[ORM\Column(length: 5)]
     #[Assert\NotBlank]
-    #[Assert\Regex('/\d{5}/',
-    message: "{{value}} n'est pas un code postal valide.")]
+    #[Assert\Length(5)]
     private ?string $codePostal = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
