@@ -42,6 +42,11 @@ class Chien
         $this->affectations = new ArrayCollection();
     }
 
+    public function __toString() : string
+    {
+        return $this->getNom();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -111,11 +116,6 @@ class Chien
         }
 
         return $this;
-    }
-
-    public function __toString() : string
-    {
-        return $this->getNom();
     }
 
 }

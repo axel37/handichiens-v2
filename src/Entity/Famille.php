@@ -40,6 +40,11 @@ class Famille extends Utilisateur
         $this->disponibilites = new ArrayCollection();
     }
 
+    public function __toString() : string
+    {
+        return $this->getNom();
+    }
+
     public function getRoles(): array
     {
         $roles = parent::getRoles();
@@ -158,8 +163,4 @@ class Famille extends Utilisateur
         return $this;
     }
 
-    public function __toString() : string
-    {
-        return $this->getNom();
-    }
 }
