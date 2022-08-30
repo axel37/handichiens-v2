@@ -3,7 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\AffectationRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AffectationRepository::class)]
 class Affectation
@@ -14,9 +16,15 @@ class Affectation
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank]
+    #[Assert\Type(DateTimeImmutable::class)]
+    #[Assert\GreaterThanOrEqual(value: 'today')]
     private ?\DateTimeImmutable $debut = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank]
+    #[Assert\Type(DateTimeImmutable::class)]
+    #[Assert\GreaterThan(propertyPath: 'debut')]
     private ?\DateTimeImmutable $fin = null;
 
     #[ORM\Column]
@@ -24,10 +32,12 @@ class Affectation
 
     #[ORM\ManyToOne(inversedBy: 'affectations')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotBlank]
     private ?Chien $chien = null;
 
     #[ORM\ManyToOne(inversedBy: 'affectations')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotBlank]
     private ?Famille $famille = null;
 
     public function getId(): ?int
@@ -94,4 +104,5 @@ class Affectation
 
         return $this;
     }
+
 }

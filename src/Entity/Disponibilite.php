@@ -3,7 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\DisponibiliteRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: DisponibiliteRepository::class)]
 class Disponibilite
@@ -14,9 +16,13 @@ class Disponibilite
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Assert\Type(DateTimeImmutable::class)]
+    #[Assert\GreaterThanOrEqual(value: 'today')]
     private ?\DateTimeImmutable $debut = null;
 
     #[ORM\Column]
+    #[Assert\Type(DateTimeImmutable::class)]
+    #[Assert\GreaterThan(propertyPath: 'debut')]
     private ?\DateTimeImmutable $fin = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -24,6 +30,7 @@ class Disponibilite
 
     #[ORM\ManyToOne(inversedBy: 'disponibilites')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotBlank]
     private ?Famille $famille = null;
 
     public function getId(): ?int
@@ -78,4 +85,5 @@ class Disponibilite
 
         return $this;
     }
+
 }
