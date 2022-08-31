@@ -1,0 +1,10 @@
+{% extends 'disposition_standard.html.twig' %}
+
+{% block title %}Handi'chiens - Nouvelle disponibilité{% endblock %}
+
+{% block contenu %}
+    {{ form(form) }}
+
+    <a href="{{ path('app_disponibilite_profil') }}">Annuler</a>
+{% endblock %}
+

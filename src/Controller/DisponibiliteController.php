@@ -4,14 +4,18 @@ namespace App\Controller;
 
 use App\Entity\Disponibilite;
 use App\Entity\Famille;
+use App\Form\DisponibiliteType;
 use App\Repository\DisponibiliteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 class DisponibiliteController extends AbstractController
 {
+    // TODO : Revoir nom des routes
     /**
      * Planning de la famille authentifiée
      * @return Response
@@ -24,6 +28,30 @@ class DisponibiliteController extends AbstractController
         } else {
             throw new AccessDeniedHttpException("Vous devez être authentifié en tant que famille pour accéder à cette ressource.");
         }
+    }
+
+    #[Route('/mes-disponibilites/ajouter', name: 'app_disponibilite_profil_ajouter')]
+    public function mesDispoAjouter(Request $request, DisponibiliteRepository $dispoRepository): Response
+    {
+        $nouvelleDispo = new Disponibilite();
+        $form = $this->createForm(DisponibiliteType::class, $nouvelleDispo);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+
+            $nouvelleDispo = $form->getData();
+            $nouvelleDispo->setFamille($this->getUser());
+
+            $dispoRepository->add($nouvelleDispo, true);
+
+            return $this->redirectToRoute('app_disponibilite_profil');
+        }
+
+        return $this->render('disponibilite/ajouter.html.twig', [
+            "form" => $form->createView()
+        ]);
     }
 
     /**

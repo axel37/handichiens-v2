@@ -10,13 +10,16 @@
     <h1>
         {% if is_granted("ROLE_EDUCATEUR") %}
             Disponibilités de la famille {{ famille.nom }}
-            {% else %}
+        {% else %}
             Vos disponibilités
         {% endif %}
     </h1>
 
+    <a href="{{ path('app_disponibilite_profil_ajouter') }}">Nouvelle disponibilité</a>
+
+
     {% for dispo in famille.disponibilites %}
         {{ dump(dispo) }}
     {% endfor %}
-    
+
 {% endblock %}

@@ -30,7 +30,6 @@ class Disponibilite
 
     #[ORM\ManyToOne(inversedBy: 'disponibilites')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Assert\NotBlank]
     private ?Famille $famille = null;
 
     public function getId(): ?int
