@@ -1,9 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+<header class="header">
+	{{component('navbar')}}
+</header>
 
-    <main class="main">
-        {% block contenu %}{%endblock%}
-    </main>
+<main class="main">
+	{% block contenu %}
+		{%endblock%}
+	</main>
 
 {% endblock %}
