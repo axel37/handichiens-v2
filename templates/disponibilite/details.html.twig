@@ -1,0 +1,10 @@
+{% extends 'disposition_standard.html.twig' %}
+
+{% block title %}Handi'chiens - Disponibilité de la famille {{ disponibilite.famille }}{% endblock %}
+
+{% block contenu %}
+    <h1>Disponibilité de la famille {{ disponibilite.famille }}</h1>
+
+    {{ disponibilite.debut|format_datetime ~ ' - ' ~ disponibilite.fin|format_datetime }}
+{% endblock %}
+

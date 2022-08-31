@@ -33,7 +33,9 @@ security:
     # IS_AUTHENTICATED_* : https://symfony.com/doc/current/security.html#checking-to-see-if-a-user-is-logged-in-is-authenticated-fully
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
-         - { path: ^/disponibilite, roles: IS_AUTHENTICATED_REMEMBERED }
+         - { path: ^/disponibilite, roles: [ROLE_EDUCATEUR, ROLE_ADMIN] }
+         - { path: ^/famille, roles: [ROLE_EDUCATEUR, ROLE_ADMIN] }
+         - { path: ^/mes-disponibilites, roles: ROLE_FAMILLE }
 
 when@test:
     security:
