@@ -5,30 +5,45 @@
 
 	{# {% if app.user %} #}
 
-	<div class="menu__dropdown">
-		<button {{ stimulus_action('menu', 'toggleMenu')}}>
-			<img class="navigation__menu--toggle" src="{{ asset('images/menu.png') }}" alt="logo menu de navigation">
-		</button>
+	<button class="navigation__toggle" {{ stimulus_action('menu', 'toggleMenu')}}>
+		<span class="navigation__toggle--bar"></span>
+		<span class="navigation__toggle--bar"></span>
+		<span class="navigation__toggle--bar"></span>
+	</button>
 
-		<div class="hidden" {{ stimulus_target('menu', 'menuList') }}>
+	<div class="navigation__menu" {{ stimulus_target('menu', 'menuList') }}>
 
-			<a class="navigation__lien" href="/">Accueil</a>
-
+		<ul class="navigation__menu--liste">
+			<li>
+				<a class="navigation__lien" href="/">Accueil</a>
+			</li>
 			{% if is_granted('ROLE_ADMIN') %}
-				<a class="navigation__lien" href="/">Les Éducateurs</a>
+				<li>
+					<a class="navigation__lien" href="/">Les Éducateurs</a>
+				</li>
 			{% endif %}
 			{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_EDUCATEUR') %}
-				<a class="navigation__lien" href="/">Les Chiens</a>
-				<a class="navigation__lien" href="/">Les Familles Relais</a>
+				<li>
+					<a class="navigation__lien" href="/">Les Chiens</a>
+				</li>
+				<li>
+					<a class="navigation__lien" href="/">Les Familles Relais</a>
+				</li>
 			{% elseif is_granted('ROLE_FAMILLE') %}
-				<a class="navigation__lien" href="/">Mes Disponibilités</a>
+				<li>
+					<a class="navigation__lien" href="/">Mes Disponibilités</a>
+				</li>
 			{% endif %}
-
-			<a class="navigation__lien" href="/profil">Mon Profil</a>
-			{{component('bouton', { type: 'principal', texte: 'Déconnexion' })}}
-		</div>
+			<li>
+				<a class="navigation__lien" href="/profil">Mon Profil</a>
+			</li>
+			<li>
+				{{component('bouton', { type: 'principal', texte: 'Déconnexion' })}}
+			</li>
+		</ul>
 
 	</div>
+
 
 	{# {% endif %} #}
 </nav>

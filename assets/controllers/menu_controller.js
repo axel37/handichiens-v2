@@ -7,6 +7,6 @@ export default class extends Controller {
     }
 
     toggleMenu() {
-        this.menuListTarget.classList.toggle("navigation__menu");
+        this.menuListTarget.classList.toggle("active");
     }
 }

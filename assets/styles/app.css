@@ -78,47 +78,107 @@ body {
     margin-right: auto;
     padding: 1rem 2rem;
     display: flex;
+    position: relative;
     justify-content: space-between;
     align-items: center;
 }
 
 .navigation__accueil--logo {
-    width: 5rem;
-    height: 5rem;
+    width: 10rem;
+    height: 10rem;
 }
 
-.menu__dropdown {
-    display: flex;
+.navigation__toggle {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    display: none;
     flex-direction: column;
-    align-items: flex-end;
+    justify-content: space-between;
+    width: 35px;
+    height: 25px;
+    border: none;
+    background-color: inherit;
 }
 
-.navigation__menu--toggle {
-    width: 3rem;
-    height: 3rem;
+.navigation__toggle--bar {
+    height: 3px;
+    width: 100%;
+    background-color: white;
+    border-radius: 10px;
 }
 
 .navigation__menu {
+    height: 100%;
+}
+
+.navigation__menu--liste {
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+    gap: 2rem;
 }
 
 .navigation__lien {
     color: var(--blanc);
     text-transform: uppercase;
-    padding: 1rem 0;
-    /* margin-right: 5rem; */
+    padding: 1rem;
+    text-decoration: none;
 }
 
-@media screen and (min-width: 48em) {}
+.navigation__lien:hover {
+    color: var(--bleu);
+}
+
+@media screen and (max-width: 800px) {
+
+    .navigation__accueil--logo {
+        width: 5rem;
+        height: 5rem;
+    }
+
+    .navigation {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .navigation__toggle {
+        display: flex;
+    }
+
+    .navigation__menu {
+        display: none;
+        width: 100%;
+    }
+
+    .navigation__menu--liste {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .navigation__menu--liste li {
+        text-align: center;
+    }
+
+    .navigation__lien {
+        padding: .5rem 1rem;
+    }
+
+    .navigation__menu.active {
+        display: flex;
+        padding: 1rem;
+    }
+}
 
 /* boutons */
 .bouton__principal {
     padding: 1rem;
     background-color: var(--bleu);
-    color: var(--blanc);
+    color: var(--noir);
     border-radius: 1rem;
+}
+
+.bouton__principal:hover {
+    background-color: var(--blanc);
+    color: var(--bleu);
 }
 
 /* LAYOUT */
