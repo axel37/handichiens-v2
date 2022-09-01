@@ -7,7 +7,7 @@ S'il s'agit de l'utilisateur connecté, autoriser les modifications
 
 {% extends 'disposition_standard.html.twig' %}
 
-{% block title %}Handi'chiens - {{ utilisateur.prenom ~ utilisateur.nom }}{% endblock %}
+{% block title %}Handi'chiens - {{ utilisateur.prenom ~ ' ' ~ utilisateur.nom }}{% endblock %}
 
 {% block contenu %}
 
@@ -33,7 +33,7 @@ S'il s'agit de l'utilisateur connecté, autoriser les modifications
         <img src="{{ vich_uploader_asset(utilisateur, 'photo') }}" alt="photo de profil">
 
         {% if 'ROLE_FAMILLE' in utilisateur.roles %}
-            <a href="{{ path('app_disponibilite_index_famille', { famille: utilisateur.id }) }}">Voir les disponibilités</a>
+            <a href="{{ path('app_disponibilite_famille', { famille: utilisateur.id }) }}">Voir les disponibilités</a>
         {% endif %}
 
         {# Si l'utilisateur consulte son propre profil #}

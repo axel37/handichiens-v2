@@ -3,8 +3,13 @@
 {% block title %}Handi'chiens - Nouvelle disponibilité{% endblock %}
 
 {% block contenu %}
+
     {{ form(form) }}
 
-    <a href="{{ path('app_mes_disponibilites') }}">Annuler</a>
+    {% if is_granted('ROLE_FAMILLE') %}
+        <a href="{{ path('app_mes_disponibilites') }}">Annuler</a>
+    {% endif %}
+
+    {# TODO : Nous devons passer la famille à la vue pour choisir un titre et générer un lien "Annuler" pour l'éducateur #}
 {% endblock %}
 

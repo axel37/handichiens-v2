@@ -4,8 +4,6 @@
 
 {% block contenu %}
 
-
-
     Bonjour <strong>{{ app.user.prenom ~ ' ' ~ app.user.nom }}</strong>.
     {# TODO : Vérifier que l'utilisateur est bien de type famille pour éviter toute erreur ? #}
     <p>Vos disponibilités :</p>
@@ -30,9 +28,5 @@
     </ul>
 
     <a href="{{ path('app_deconnexion') }}">Se déconnecter.</a>
-
-
-    <pre>User :</pre>
-    {{ dump(app.user) }}
 
 {% endblock %}

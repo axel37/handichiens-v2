@@ -19,21 +19,29 @@ Les disponibilités d'une famille
 
     </h1>
 
-    {# Si la famille consulte son propre profil, elle peut ajouter une disponibilité #}
     {% if famille == app.user %}
         <a href="{{ path('app_mes_disponibilites_ajouter') }}">Nouvelle disponibilité</a>
+    {% else %}
+        <a href="{{ path('app_disponibilite_famille_ajouter', {famille: famille.id}) }}">Ajouter une disponibilité pour
+            la famille</a>
+
     {% endif %}
 
-
+    {# Liste des disponibilités #}
     {% if famille.disponibilites is empty %}
         <p>Aucune disponibilité !</p>
     {% else %}
         <ul>
             {% for dispo in famille.disponibilites %}
-                <li>{{ dispo.debut|format_date ~ ' - ' ~ dispo.fin|format_date }}</li>
+                <li>
+                    {{ dispo.debut|format_date ~ ' - ' ~ dispo.fin|format_date }}
+                    {% if dispo.libelle %}
+                        ({{ dispo.libelle }})
+                    {% endif %}
+                </li>
             {% endfor %}
         </ul>
     {% endif %}
-    
+
 
 {% endblock %}
