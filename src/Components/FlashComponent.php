@@ -7,6 +7,6 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 #[AsTwigComponent('flash')]
 class FlashComponent
 {
-    public string $type = "notice";
+    public string $type;
     public string $message;
 }

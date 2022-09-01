@@ -1,19 +1,8 @@
-{% extends 'base.html.twig' %}
+{% extends 'disposition_standard.html.twig' %}
 
 {% block title %}Handi'chiens - Profil{% endblock %}
 
-{% block body %}
-
-    {# read and display all flash messages #}
-    {% for label, messages in app.flashes %}
-        {% for message in messages %}
-            {{ component( 'flash', {
-                type:  label ,
-                message:  message 
-                })
-            }}
-        {% endfor %}
-    {% endfor %}
+{% block contenu %}
 
 <div class="example-wrapper">
     <ul>

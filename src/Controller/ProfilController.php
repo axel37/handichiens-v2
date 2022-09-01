@@ -41,7 +41,7 @@ class ProfilController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()){
 
             $this->addFlash(
-                'notice',
+                'validation',
                 'Vos modifications ont été enregistrés.'
             );
 

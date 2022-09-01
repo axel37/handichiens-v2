@@ -5,6 +5,17 @@
 	{{component('navbar')}}
 </header>
 
+{# read and display all flash messages #}
+    {% for label, messages in app.flashes(['validation', 'erreur']) %}
+        {% for message in messages %}
+            {{ component( 'flash', {
+                type:  label ,
+                message:  message 
+                })
+            }}
+        {% endfor %}
+    {% endfor %}
+
 <main class="main">
 	{% block contenu %}
 		{%endblock%}

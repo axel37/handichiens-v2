@@ -181,6 +181,22 @@ body {
     color: var(--bleu);
 }
 
+/* flash */
+.flash__validation {
+    background-color: rgb(57, 227, 57);
+    height: 4rem;
+    margin-right: auto;
+    margin-left: auto;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flash__message {
+    color: var(--noir);
+}
+
 /* LAYOUT */
 
 header {
