@@ -6,17 +6,6 @@
 
 {% block body %}
 
-    {# read and display all flash messages #}
-    {% for label, messages in app.flashes %}
-        {% for message in messages %}
-            {{ component( 'flash', {
-                type:  label ,
-                message:  message 
-                })
-            }}
-        {% endfor %}
-    {% endfor %}
-
     <h1>
         {% if is_granted("ROLE_EDUCATEUR") %}
             Disponibilités de la famille {{ famille.nom }}
