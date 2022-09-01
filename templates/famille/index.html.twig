@@ -1,0 +1,14 @@
+{# Liste de toutes les familles #}
+
+{% extends 'disposition_standard.html.twig' %}
+
+{% block title %}Handi'chiens - Les familles relais{% endblock %}
+
+{% block contenu %}
+    <h1>Les familles relais</h1>
+    <ul>
+        {% for famille in familles %}
+            <li><a href="{{ path('app_famille_details', {famille: famille.id}) }}">Famille {{ famille.nom }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}
