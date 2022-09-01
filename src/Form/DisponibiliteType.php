@@ -23,8 +23,6 @@ class DisponibiliteType extends AbstractType
             ->add('debut', DateTimeType::class, [
                 'input' => 'datetime_immutable',
                 'label' => 'Début de la disponibilité',
-//                'date_label' => 'Commence le',
-//                'time_label' => 'à',
                 'with_seconds' => false,
                 'years' => range($anneeMin, $anneeMax),
                 'data' => $today,

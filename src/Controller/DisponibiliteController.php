@@ -14,7 +14,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DisponibiliteController extends AbstractController
 {
-    // TODO : Revoir nom des routes
     /**
      * Planning de la famille authentifiée
      * @return Response
@@ -29,6 +28,12 @@ class DisponibiliteController extends AbstractController
         }
     }
 
+    /**
+     * Ajout d'une disponibilité par la famille authentifiée
+     * @param Request $request
+     * @param DisponibiliteRepository $dispoRepository
+     * @return Response
+     */
     #[Route('/mes-disponibilites/ajouter', name: 'app_mes_disponibilites_ajouter')]
     public function mesDispoAjouter(Request $request, DisponibiliteRepository $dispoRepository): Response
     {
