@@ -1,0 +1,25 @@
+{# Les disponibilités d'une famille #}
+
+{% extends 'disposition_standard.html.twig' %}
+
+{% block title %}Handi'chiens - Disponibilités de la famille {{ famille.nom }}{% endblock %}
+
+{% block body %}
+
+
+    <h1>
+        {% if is_granted("ROLE_EDUCATEUR") %}
+            Disponibilités de la famille {{ famille.nom }}
+        {% else %}
+            Vos disponibilités
+        {% endif %}
+    </h1>
+
+    <a href="{{ path('app_mes_disponibilites_ajouter') }}">Nouvelle disponibilité</a>
+
+
+    {% for dispo in famille.disponibilites %}
+        {{ dump(dispo) }}
+    {% endfor %}
+
+{% endblock %}
