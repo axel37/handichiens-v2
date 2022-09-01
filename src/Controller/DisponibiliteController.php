@@ -10,7 +10,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 class DisponibiliteController extends AbstractController
@@ -20,7 +19,7 @@ class DisponibiliteController extends AbstractController
      * Planning de la famille authentifiée
      * @return Response
      */
-    #[Route('/mes-disponibilites', name: 'app_disponibilite_profil')]
+    #[Route('/mes-disponibilites', name: 'app_mes_disponibilites')]
     public function mesDispo(): Response
     {
         if ($this->isGranted('ROLE_FAMILLE') && $this->getUser() instanceof Famille) {
@@ -30,7 +29,7 @@ class DisponibiliteController extends AbstractController
         }
     }
 
-    #[Route('/mes-disponibilites/ajouter', name: 'app_disponibilite_profil_ajouter')]
+    #[Route('/mes-disponibilites/ajouter', name: 'app_mes_disponibilites_ajouter')]
     public function mesDispoAjouter(Request $request, DisponibiliteRepository $dispoRepository): Response
     {
         $nouvelleDispo = new Disponibilite();
@@ -46,7 +45,7 @@ class DisponibiliteController extends AbstractController
 
             $dispoRepository->add($nouvelleDispo, true);
 
-            return $this->redirectToRoute('app_disponibilite_profil');
+            return $this->redirectToRoute('app_mes_disponibilites');
         }
 
         return $this->render('disponibilite/ajouter.html.twig', [
@@ -92,7 +91,7 @@ class DisponibiliteController extends AbstractController
      * @param Famille $famille
      * @return Response
      */
-    #[Route('famille/{famille}/disponibilite/', name: 'app_disponibilite_famille')]
+    #[Route('famille/{famille}/disponibilite/', name: 'app_disponibilite_index_famille')]
     public function parFamille(Famille $famille): Response
     {
         return $this->renderPlanning($famille);
