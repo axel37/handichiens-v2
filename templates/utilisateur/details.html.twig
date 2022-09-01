@@ -1,6 +1,8 @@
 {#
 Affichage d'un utilisateur / d'une famille
 S'il s'agit de l'utilisateur connecté, autoriser les modifications
+
+    (Utilisateur ou Famille) utilisateur : L'utilisateur dont on affiche les informations
 #}
 
 {% extends 'disposition_standard.html.twig' %}
@@ -16,12 +18,23 @@ S'il s'agit de l'utilisateur connecté, autoriser les modifications
         <li>Adresse mail : {{ utilisateur.email }}</li>
         <li>Telephone : {{ utilisateur.telephone }}</li>
         {# TODO : Tester directement le type ? #}
+
+        {# Si l'utilisateur consulté est une famille, afficher des informations supplémentaires #}
         {% if 'ROLE_FAMILLE' in utilisateur.roles %}
             <li>Adresse : {{ utilisateur.adresse }}</li>
             <li>Code postal : {{ utilisateur.codePostal }}</li>
             <li>Ville : {{ utilisateur.ville }}</li>
+
+            {# Si l'utilisateur authentifié est un éducateur ou un administrateur, afficher des informations supplémentaires #}
+            {% if is_granted("ROLE_EDUCATEUR") or is_granted("ROLE_ADMIN") %}
+                <li>Commentaire : {{ utilisateur.commentaire }}</li>
+            {% endif %}
         {% endif %}
         <img src="{{ vich_uploader_asset(utilisateur, 'photo') }}" alt="photo de profil">
+
+        {% if 'ROLE_FAMILLE' in utilisateur.roles %}
+            <a href="{{ path('app_disponibilite_index_famille', { famille: utilisateur.id }) }}">Voir les disponibilités</a>
+        {% endif %}
 
         {# Si l'utilisateur consulte son propre profil #}
         {% if utilisateur == app.user %}

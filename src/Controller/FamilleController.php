@@ -26,4 +26,12 @@ class FamilleController extends AbstractController
             'utilisateur' => $famille,
         ]);
     }
+
+    #[Route('/famille/{famille}/disponibilite', name: 'app_famille_disponibilite')]
+    public function disponibilite(Famille $famille): Response
+    {
+        return $this->render('disponibilite/famille.html.twig', [
+            'utilisateur' => $famille,
+        ]);
+    }
 }
