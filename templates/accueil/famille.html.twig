@@ -4,6 +4,16 @@
 
 {% block contenu %}
 
+    {# read and display all flash messages #}
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            {{ component( 'flash', {
+                type:  label ,
+                message:  message 
+                })
+            }}
+        {% endfor %}
+    {% endfor %}
 
 
     Bonjour <strong>{{ app.user.prenom ~ ' ' ~ app.user.nom }}</strong>.

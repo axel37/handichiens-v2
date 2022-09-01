@@ -4,6 +4,17 @@
 
 {% block contenu %}
 
+    {# read and display all flash messages #}
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            {{ component( 'flash', {
+                type:  label ,
+                message:  message 
+                })
+            }}
+        {% endfor %}
+    {% endfor %}
+
     <p>Vous êtes connecté en tant qu'administrateur.</p>
 
     <p><a href="{{ path('app_deconnexion') }}">Se déconnecter.</a></p>

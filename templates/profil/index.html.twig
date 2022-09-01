@@ -1,8 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ProfilController!{% endblock %}
+{% block title %}Handi'chiens - Profil{% endblock %}
 
 {% block body %}
+
+    {# read and display all flash messages #}
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            {{ component( 'flash', {
+                type:  label ,
+                message:  message 
+                })
+            }}
+        {% endfor %}
+    {% endfor %}
 
 <div class="example-wrapper">
     <ul>
