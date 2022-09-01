@@ -11,6 +11,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class UtilisateurType extends AbstractType
 {
@@ -18,12 +19,18 @@ class UtilisateurType extends AbstractType
     {
         // On crée un formulaire avec les champs de base d'un utilisateur.
         $builder
-            //->add('roles')
-            //->add('password')
             ->add('nom')
-            ->add('prenom')
+            ->add('prenom', TextType::class, [
+                "label" => 'Prénom'
+            ])
             ->add('email')
-            ->add('telephone');
+            ->add('telephone', TextType::class, [
+                "label" => 'Téléphone'
+            ])
+            ->add('photo', VichImageType::class, [
+                "required" => false,
+            ])
+        ;
 
     // On va vérifier si l'utilisateur est une famille
     // Si oui, on rajoute les champs "Adresse", "Ville" et "CodePostal"

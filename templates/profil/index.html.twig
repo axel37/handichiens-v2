@@ -10,14 +10,17 @@
                     {% elseif is_granted("ROLE_EDUCATEUR") %} Éducateur
                     {% elseif is_granted("ROLE_FAMILLE") %} Famille
                     {% endif %}
-        <li>Nom : {{utilisateur.Nom}}</li>
-        <li>Prénom : {{utilisateur.Prenom}}</li>
-        <li>Adresse mail : {{utilisateur.Email}}</li>
-        <li>Telephone : {{utilisateur.Telephone}}</li>
+        <li>Nom : {{utilisateur.nom}}</li>
+        <li>Prénom : {{utilisateur.prenom}}</li>
+        <li>Adresse mail : {{utilisateur.email}}</li>
+        <li>Telephone : {{utilisateur.telephone}}</li>
         {% if is_granted("ROLE_FAMILLE")%}
-        <li>Adresse : {{utilisateur.Adresse}}</li>
-        <li>Code postal : {{utilisateur.CodePostal}}</li>
-        <li>Ville : {{utilisateur.Ville}}</li>
+        <li>Adresse : {{utilisateur.adresse}}</li>
+        <li>Code postal : {{utilisateur.codePostal}}</li>
+        <li>Ville : {{utilisateur.ville}}</li>
         {% endif %}
+        <img src="{{ vich_uploader_asset(utilisateur, 'photo') }}" alt="photo de profil">
+
+    </ul>
 </div>
 {% endblock %}
