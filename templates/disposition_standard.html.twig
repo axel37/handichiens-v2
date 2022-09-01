@@ -6,7 +6,7 @@
 </header>
 
 {# read and display all flash messages #}
-    {% for label, messages in app.flashes(['validation', 'erreur']) %}
+    {% for label, messages in app.flashes(['succes', 'avertissement', 'erreur']) %}
         {% for message in messages %}
             {{ component( 'flash', {
                 type:  label ,

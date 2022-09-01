@@ -40,11 +40,6 @@ class ProfilController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()){
 
-            $this->addFlash(
-                'validation',
-                'Vos modifications ont été enregistrés.'
-            );
-
             $profil = $form->getData();
 
             $this->entityManager->persist($profil);
