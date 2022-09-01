@@ -6,6 +6,8 @@
 
     <p>Bienvenue sur Handi'chiens v2, l'application de gestion de Handi'chiens Vineuil.</p>
 
-    <p>Vous n'êtes pas authentifié. <a href="{{ path('app_connexion') }}">Se connecter.</a></p>
+    <p>Vous n'êtes pas authentifié.</p>
+    {% set bouton_connexion_path = path('app_connexion') %}
+    {{ component('bouton', {href: bouton_connexion_path, texte: "Se connecter"}) }}
 
 {% endblock %}

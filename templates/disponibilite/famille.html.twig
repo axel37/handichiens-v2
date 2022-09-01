@@ -14,17 +14,20 @@ Les disponibilités d'une famille
         {% if famille == app.user %}
             Vos disponibilités
         {% else %}
-            Disponibilités de la <a href="{{ path('app_famille_details', {famille: famille.id}) }}">famille {{ famille.nom }}</a>
+            Disponibilités de la <a
+                href="{{ path('app_famille_details', {famille: famille.id}) }}">famille {{ famille.nom }}</a>
         {% endif %}
 
     </h1>
 
     {% if famille == app.user %}
-        <a href="{{ path('app_mes_disponibilites_ajouter') }}">Nouvelle disponibilité</a>
-    {% else %}
-        <a href="{{ path('app_disponibilite_famille_ajouter', {famille: famille.id}) }}">Ajouter une disponibilité pour
-            la famille</a>
 
+        {% set bouton_ajouter_path = path('app_mes_disponibilites_ajouter') %}
+        {{ component('bouton', {href: bouton_ajouter_path, texte: "Nouvelle Disponibilité"}) }}
+    {% else %}
+
+        {% set bouton_ajouter_path = path('app_disponibilite_famille_ajouter', {famille: famille.id}) %}
+        {{ component('bouton', {href: bouton_ajouter_path, texte: "Ajouter une disponibilité pour la famille"}) }}
     {% endif %}
 
     {# Liste des disponibilités #}
