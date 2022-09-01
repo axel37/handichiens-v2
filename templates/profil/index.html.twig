@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ProfilController!{% endblock %}
+
+{% block body %}
+
+<div class="example-wrapper">
+    <ul>
+        <li>Rôle :  {% if is_granted("ROLE_ADMIN") %} Administrateur
+                    {% elseif is_granted("ROLE_EDUCATEUR") %} Éducateur
+                    {% elseif is_granted("ROLE_FAMILLE") %} Famille
+                    {% endif %}
+        <li>Nom : {{utilisateur.Nom}}</li>
+        <li>Prénom : {{utilisateur.Prenom}}</li>
+        <li>Adresse mail : {{utilisateur.Email}}</li>
+        <li>Telephone : {{utilisateur.Telephone}}</li>
+        {% if is_granted("ROLE_FAMILLE")%}
+        <li>Adresse : {{utilisateur.Adresse}}</li>
+        <li>Code postal : {{utilisateur.CodePostal}}</li>
+        <li>Ville : {{utilisateur.Ville}}</li>
+        {% endif %}
+</div>
+{% endblock %}
