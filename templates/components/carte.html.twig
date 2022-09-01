@@ -1,0 +1,10 @@
+<a href="{{href}}" class="carte">
+    <div class="carte__icones">
+        <img class="carte__icones--image" src="{{ asset('images/logo_handichiens.png') }}" alt="">
+    </div>
+    <div class="carte__textes">
+        {% if texte %}
+            <p class="carte__textes--direction">{{texte}}</p>
+        {% endif %}
+    </div>
+</a>
