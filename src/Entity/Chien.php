@@ -19,8 +19,6 @@ use Vich\UploaderBundle\Mapping\Annotation\UploadableField;
 #[Uploadable]
 class Chien
 {
-    // TODO : Photo
-
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
