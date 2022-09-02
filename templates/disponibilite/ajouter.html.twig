@@ -18,10 +18,10 @@ Formulaire d'ajout de disponibilité
 
     {% if is_granted('ROLE_FAMILLE') %}
         {% set bouton_annuler_path = path('app_mes_disponibilites') %}
-        {{ component('bouton', {href: bouton_annuler_path, texte: "Annuler"}) }}
+        {{ component('bouton', {type: 'secondaire', href: bouton_annuler_path, texte: "Annuler"}) }}
     {% else %}
         {% set bouton_annuler_path = path('app_disponibilite_famille', {famille: famille.id}) %}
-        {{ component('bouton', {href: bouton_annuler_path, texte: "Annuler"}) }}
+        {{ component('bouton', {type: 'secondaire', href: bouton_annuler_path, texte: "Annuler"}) }}
     {% endif %}
 
     {# TODO : Nous devons passer la famille à la vue pour choisir un titre et générer un lien "Annuler" pour l'éducateur #}

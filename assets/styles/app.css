@@ -47,6 +47,7 @@
     --noir: #000;
     --blanc: #FFF;
     --gris: #606060;
+    --rouge: #D41B1B;
 }
 
 /* global */
@@ -169,16 +170,45 @@ body {
 }
 
 /* boutons */
-.bouton__principal {
+.bouton__principal,
+.bouton__secondaire,
+.bouton__danger {
     padding: 1rem;
+    border-radius: 1rem;
+    border: solid 1px transparent;
+}
+
+.bouton__principal {
     background-color: var(--bleu);
     color: var(--noir);
-    border-radius: 1rem;
 }
 
 .bouton__principal:hover {
     background-color: var(--blanc);
     color: var(--bleu);
+    border: solid 1px var(--bleu);
+}
+
+.bouton__secondaire {
+    background-color: var(--gris);
+    color: var(--blanc);
+}
+
+.bouton__secondaire:hover {
+    background-color: var(--blanc);
+    color: var(--gris);
+    border: solid 1px var(--gris);
+}
+
+.bouton__danger {
+    background-color: var(--rouge);
+    color: var(--blanc);
+}
+
+.bouton__danger:hover {
+    background-color: var(--blanc);
+    color: var(--rouge);
+    border: solid 1px var(--rouge);
 }
 
 /* flash */
