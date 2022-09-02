@@ -170,9 +170,7 @@ body {
 }
 
 /* boutons */
-.bouton__principal,
-.bouton__secondaire,
-.bouton__danger {
+.bouton {
     padding: 1rem;
     border-radius: 1rem;
     border: solid 1px transparent;
@@ -212,9 +210,7 @@ body {
 }
 
 /* flash */
-.flash__success,
-.flash__warning,
-.flash__error {
+.flash {
     height: 4rem;
     margin-right: auto;
     margin-left: auto;
