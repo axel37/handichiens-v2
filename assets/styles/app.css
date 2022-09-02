@@ -60,7 +60,7 @@
 body {
     font-family: Raleway, sans-serif;
     line-height: 1.2;
-    font-weight: regular;
+    font-weight: normal;
     color: var(--noir);
     background-color: var(--blanc);
 }
@@ -234,6 +234,7 @@ header {
     max-width: 85rem;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 3rem;
     padding-left: 2rem;
     padding-right: 2rem;
 }

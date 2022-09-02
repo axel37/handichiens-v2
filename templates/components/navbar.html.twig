@@ -1,5 +1,5 @@
 <nav class="navigation" {{ stimulus_controller('navbar') }}>
-	<a href="/" class="navigation__accueil">
+	<a href="{{ path('app_accueil') }}" class="navigation__accueil">
 		<img class="navigation__accueil--logo" src="{{ asset('images/logo_handichiens.png') }}" alt="logo accueil">
 	</a>
 
@@ -15,7 +15,7 @@
 
 			<ul class="navigation__menu--liste">
 				<li>
-					<a class="navigation__lien" href="/">Accueil</a>
+					<a class="navigation__lien" href="{{ path('app_accueil') }}">Accueil</a>
 				</li>
 				{% if is_granted('ROLE_ADMIN') %}
 					<li>
@@ -27,18 +27,19 @@
 						<a class="navigation__lien" href="/">Les Chiens</a>
 					</li>
 					<li>
-						<a class="navigation__lien" href="/">Les Familles Relais</a>
+						<a class="navigation__lien" href="{{ path('app_famille_index') }}">Les Familles Relais</a>
 					</li>
 				{% elseif is_granted('ROLE_FAMILLE') %}
 					<li>
-						<a class="navigation__lien" href="/">Mes Disponibilités</a>
+						<a class="navigation__lien" href="{{ path('app_mes_disponibilites') }}">Mes Disponibilités</a>
 					</li>
 				{% endif %}
 				<li>
-					<a class="navigation__lien" href="/profil">Mon Profil</a>
+					<a class="navigation__lien" href="{{ path('app_profil') }}">Mon Profil</a>
 				</li>
 				<li>
-					{{component('bouton', { type: 'principal',href: 'deconnexion', texte: 'Déconnexion' })}}
+					{% set deconnexion_path = path('app_deconnexion') %}
+					{{component('bouton', { type: 'principal', href: deconnexion_path, texte: 'Déconnexion' })}}
 				</li>
 			</ul>
 

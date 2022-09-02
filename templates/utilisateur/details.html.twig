@@ -1,0 +1,60 @@
+{#
+Affichage d'un utilisateur / d'une famille
+S'il s'agit de l'utilisateur connecté, autoriser les modifications
+
+    (Utilisateur ou Famille) utilisateur : L'utilisateur dont on affiche les informations
+#}
+
+{% extends 'disposition_standard.html.twig' %}
+
+{% block title %}Handi'chiens - {{ utilisateur.prenom ~ ' ' ~ utilisateur.nom }}{% endblock %}
+
+{% block contenu %}
+
+    <h1>
+        {% if app.user == utilisateur %}
+            Mon profil
+            {% if instance_of(utilisateur, 'App\\Entity\\Famille') %}
+                Famille relais
+            {% endif %}
+        {% else %}
+            {{ utilisateur.prenom ~ ' ' ~ utilisateur.nom }}
+        {% endif %}
+    </h1>
+
+    <ul>
+        <li>Rôles : {{ dump(utilisateur.roles) }}</li>
+        <li>Nom : {{ utilisateur.nom }}</li>
+        <li>Prénom : {{ utilisateur.prenom }}</li>
+        <li>Adresse mail : {{ utilisateur.email }}</li>
+        <li>Telephone : {{ utilisateur.telephone }}</li>
+        {# TODO : Tester directement le type ? #}
+
+        {# Si l'utilisateur consulté est une famille, afficher des informations supplémentaires #}
+        {% if 'ROLE_FAMILLE' in utilisateur.roles %}
+            <li>Adresse : {{ utilisateur.adresse }}</li>
+            <li>Code postal : {{ utilisateur.codePostal }}</li>
+            <li>Ville : {{ utilisateur.ville }}</li>
+
+            {# Si l'utilisateur authentifié est un éducateur ou un administrateur, afficher des informations supplémentaires #}
+            {% if is_granted("ROLE_EDUCATEUR") or is_granted("ROLE_ADMIN") %}
+                <li>Commentaire : {{ utilisateur.commentaire }}</li>
+            {% endif %}
+        {% endif %}
+        <img src="{{ vich_uploader_asset(utilisateur, 'photo') }}" alt="photo de profil">
+
+
+        {# Si l'utilisateur authentifié est un éducateur ou un administrateur, afficher un lien vers les disponibilités #}
+        {% if (is_granted('ROLE_EDUCATEUR') or is_granted('ROLE_ADMIN')) and instance_of(utilisateur, 'App\\Entity\\Famille') %}
+            {% set bouton_dispo_path = path('app_disponibilite_famille', {famille: utilisateur.id}) %}
+            {{ component('bouton', {href: bouton_dispo_path, texte: "Voir les disponibilités"}) }}
+        {% endif %}
+
+        {# Si l'utilisateur consulte son propre profil #}
+        {% if utilisateur == app.user %}
+            {% set bouton_modifier_path = path('app_profil_modifier') %}
+            {{ component('bouton', {href: bouton_modifier_path, texte: "Modifier mes informations"}) }}
+        {% endif %}
+
+    </ul>
+{% endblock %}

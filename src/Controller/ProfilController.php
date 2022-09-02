@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Utilisateur;
 use App\Form\UtilisateurType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,10 +22,10 @@ class ProfilController extends AbstractController
     #[Route('/mon-profil', name: 'app_profil')]
     public function index(): Response
     {
-        $profil = $this->getUser();
+        $utilisateur = $this->getUser();
 
-        return $this->render('profil/index.html.twig', [
-            'utilisateur' => $profil,
+        return $this->render('utilisateur/details.html.twig', [
+            'utilisateur' => $utilisateur,
         ]);
     }
 

@@ -54,12 +54,13 @@ class DisponibiliteController extends AbstractController
         }
 
         return $this->render('disponibilite/ajouter.html.twig', [
-            "form" => $form->createView()
+            "form" => $form->createView(),
+            'famille' => $this->getUser(),
         ]);
     }
 
     /**
-     * Disponibilités de toutes les familles
+     * Liste des disponibilités de toutes les familles
      * @param DisponibiliteRepository $dispoRepo
      * @return Response
      */
@@ -92,14 +93,44 @@ class DisponibiliteController extends AbstractController
 
 
     /**
-     * Disponibilités de la famille en paramètre dans l'url
+     * Liste des disponibilités d'une famille
      * @param Famille $famille
      * @return Response
      */
-    #[Route('famille/{famille}/disponibilite/', name: 'app_disponibilite_index_famille')]
+    #[Route('famille/{famille}/disponibilite', name: 'app_disponibilite_famille')]
     public function parFamille(Famille $famille): Response
     {
         return $this->renderPlanning($famille);
+    }
+
+    /**
+     * Ajouter une disponibilité à une famille
+     * @param Famille $famille
+     * @return Response
+     */
+    #[Route('famille/{famille}/disponibilite/ajouter', name: 'app_disponibilite_famille_ajouter')]
+    public function ajouterAFamille(Famille $famille, Request $request, DisponibiliteRepository $dispoRepository): Response
+    {
+        $nouvelleDispo = new Disponibilite();
+        $form = $this->createForm(DisponibiliteType::class, $nouvelleDispo);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+
+            $nouvelleDispo = $form->getData();
+            $nouvelleDispo->setFamille($famille);
+
+            $dispoRepository->add($nouvelleDispo, true);
+
+            return $this->redirectToRoute('app_disponibilite_famille', ['famille' => $famille->getId()]);
+        }
+
+        return $this->render('disponibilite/ajouter.html.twig', [
+            "form" => $form->createView(),
+            'famille' => $famille,
+        ]);
     }
 
 

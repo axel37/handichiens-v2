@@ -1,24 +1,49 @@
-{# Les disponibilités d'une famille #}
+{#
+Les disponibilités d'une famille
+    (Famille) famille : La famille dont on affiche les disponibilités
+#}
 
 {% extends 'disposition_standard.html.twig' %}
 
 {% block title %}Handi'chiens - Disponibilités de la famille {{ famille.nom }}{% endblock %}
 
-{% block body %}
+{% block contenu %}
 
     <h1>
-        {% if is_granted("ROLE_EDUCATEUR") %}
-            Disponibilités de la famille {{ famille.nom }}
-        {% else %}
+        {% if famille == app.user %}
             Vos disponibilités
+        {% else %}
+            Disponibilités de la <a
+                href="{{ path('app_famille_details', {famille: famille.id}) }}">famille {{ famille.nom }}</a>
         {% endif %}
+
     </h1>
 
-    <a href="{{ path('app_mes_disponibilites_ajouter') }}">Nouvelle disponibilité</a>
+    {% if famille == app.user %}
 
+        {% set bouton_ajouter_path = path('app_mes_disponibilites_ajouter') %}
+        {{ component('bouton', {href: bouton_ajouter_path, texte: "Nouvelle Disponibilité"}) }}
+    {% else %}
 
-    {% for dispo in famille.disponibilites %}
-        {{ dump(dispo) }}
-    {% endfor %}
+        {% set bouton_ajouter_path = path('app_disponibilite_famille_ajouter', {famille: famille.id}) %}
+        {{ component('bouton', {href: bouton_ajouter_path, texte: "Ajouter une disponibilité pour la famille"}) }}
+    {% endif %}
+
+    {# Liste des disponibilités #}
+    {% if famille.disponibilites is empty %}
+        <p>Aucune disponibilité !</p>
+    {% else %}
+        <ul>
+            {% for dispo in famille.disponibilites %}
+                <li>
+                    {{ dispo.debut|format_date ~ ' - ' ~ dispo.fin|format_date }}
+                    {% if dispo.libelle %}
+                        ({{ dispo.libelle }})
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
 
 {% endblock %}
