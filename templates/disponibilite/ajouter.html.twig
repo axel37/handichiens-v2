@@ -1,13 +1,26 @@
+{#
+Formulaire d'ajout de disponibilité
+#}
+
 {% extends 'disposition_standard.html.twig' %}
 
 {% block title %}Handi'chiens - Nouvelle disponibilité{% endblock %}
 
 {% block contenu %}
+    <h1>
+        Nouvelle disponibilité
+        {% if famille != app.user %}
+            - Famille {{ famille.nom }}
+        {% endif %}
+    </h1>
 
     {{ form(form) }}
 
     {% if is_granted('ROLE_FAMILLE') %}
         {% set bouton_annuler_path = path('app_mes_disponibilites') %}
+        {{ component('bouton', {href: bouton_annuler_path, texte: "Annuler"}) }}
+    {% else %}
+        {% set bouton_annuler_path = path('app_disponibilite_famille', {famille: famille.id}) %}
         {{ component('bouton', {href: bouton_annuler_path, texte: "Annuler"}) }}
     {% endif %}
 

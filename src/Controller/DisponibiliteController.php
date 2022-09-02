@@ -54,7 +54,8 @@ class DisponibiliteController extends AbstractController
         }
 
         return $this->render('disponibilite/ajouter.html.twig', [
-            "form" => $form->createView()
+            "form" => $form->createView(),
+            'famille' => $this->getUser(),
         ]);
     }
 
@@ -127,7 +128,8 @@ class DisponibiliteController extends AbstractController
         }
 
         return $this->render('disponibilite/ajouter.html.twig', [
-            "form" => $form->createView()
+            "form" => $form->createView(),
+            'famille' => $famille,
         ]);
     }
 
