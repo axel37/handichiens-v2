@@ -3,10 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Famille;
+use App\Form\UtilisateurType;
 use App\Repository\FamilleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class FamilleController extends AbstractController
@@ -45,9 +48,30 @@ class FamilleController extends AbstractController
      * @return Response
      */
     #[Route('/famille/ajouter', name: 'app_famille_ajouter')]
-    public function ajouter(): Response
+    public function ajouter(Request $request, FamilleRepository $familleRepository, UserPasswordHasherInterface $passwordHasher): Response
     {
-        // TODO : Créer (et traiter) le formulaire
-        throw new NotFoundHttpException('Pas encore implémenté !');
+        /** @var Famille $nouvelleFamille */
+        $nouvelleFamille = new Famille();
+
+        // TODO : Gérer le mot de passe des familles créées par un éducateur / admin
+        $nouvelleFamille->setPassword($passwordHasher->hashPassword($nouvelleFamille, 'test'));
+
+        $form = $this->createForm(UtilisateurType::class, $nouvelleFamille);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+
+            /** @var Famille $nouvelleFamille */
+            $nouvelleFamille = $form->getData();
+
+            $familleRepository->add($nouvelleFamille, true);
+
+            return $this->redirectToRoute('app_famille_details', ['famille' => $nouvelleFamille->getId()]);
+        }
+
+        return $this->render('profil/edit.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 }
