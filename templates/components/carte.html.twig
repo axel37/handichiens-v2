@@ -1,94 +1,14 @@
-<a href="{{href}}" class="carte">
+<a href="{{ href }}" class="carte">
 
-    {% if type == "defaut" %}
+    <div class="carte__icones">
+        {% for img in icone %}
+            <img src="{{ img }}" alt="">
+        {% endfor %}
+    </div>
 
-        <div class="carte__icones">
-            <img class="carte__icones--image" src="{{ asset('images/logo_handichiens.png') }}" alt="">
-        </div>
-
-        <div class="carte__textes">
-            <p class="carte__textes--lignes">{{texte1}}</p>
-        </div>
-
-    {% elseif type == "multilline" %}
-
-        <div class="carte__icones">
-            <img class="carte__icones--image" src="{{ asset('images/logo_handichiens.png') }}" alt="">
-        </div>
-
-        <div class="carte__textes">
-            <p class="carte__textes--ligne">{{texte1}}</p>
-            <p class="carte__textes--ligne">{{texte2}}</p>
-        </div>
-
-    {% elseif type == "affectation" %}
-
-        <div class="carte__icones">
-            <img class="carte__icones--image" src="{{ asset('images/logo_handichiens.png') }}" alt="">
-            <img class="carte__icones--image" src="{{ asset('images/logo_handichiens.png') }}" alt="">
-        </div>
-
-        <div class="carte__textes">
-            <p class="carte__textes--ligne">{{entite.chien}}</p>
-            <p class="carte__textes--ligne">{{entite.famille}}</p>
-            <p class="carte__textes--ligne">{{entite.debut}} {{entite.fin}}</p>
-        </div>
-
-    {% elseif type == "famille" %}
-
-        <div class="carte__icones">
-            <img class="carte__icones--image" src="{{ asset('images/logo_handichiens.png') }}" alt="">
-        </div>
-
-        <div class="carte__textes">
-            <p class="carte__textes--ligne">{{entite.nom}}</p>
-            <p class="carte__textes--ligne">{{entite.ville}}</p>
-        </div>
-
-    {% elseif type == "disponibilite-famille" %}
-
-        <div class="carte__icones">
-            <img class="carte__icones--image" src="{{ asset('images/logo_handichiens.png') }}" alt="">
-        </div>
-
-        <div class="carte__textes">
-            <p class="carte__textes--ligne">{{entite.nom}}</p>
-            <p class="carte__textes--ligne">{{entite.debut}}</p>
-            <p class="carte__textes--ligne">{{entite.fin}}</p>
-        </div>
-
-    {% elseif type == "disponibilite" %}
-
-        <div class="carte__icones">
-            <img class="carte__icones--image" src="{{ asset('images/logo_handichiens.png') }}" alt="">
-        </div>
-
-        <div class="carte__textes">
-            <p class="carte__textes--ligne">{{entite.debut}}</p>
-            <p class="carte__textes--ligne">{{entite.fin}}</p>
-        </div>
-
-    {% elseif type == "chien" %}
-
-        <div class="carte__icones">
-            <img class="carte__icones--image" src="{{ asset('images/logo_handichiens.png') }}" alt="">
-        </div>
-
-        <div class="carte__textes">
-            <p class="carte__textes--ligne">{{entite.nom}}</p>
-            <p class="carte__textes--ligne">{{entite.race}}</p>
-        </div>
-
-    {% elseif type == "utilisateur" %}
-
-        <div class="carte__icones">
-            <img class="carte__icones--image" src="{{ asset('images/logo_handichiens.png') }}" alt="">
-        </div>
-
-        <div class="carte__textes">
-            <p class="carte__textes--ligne">{{entite.nom}}</p>
-            <p class="carte__textes--ligne">{{entite.prenom}}</p>
-        </div>
-
-    {% endif %}
+    <div class="carte__textes">
+        {% for ligne in texte %}
+            <p>{{ ligne }}</p>
+        {% endfor %}
+    </div>
 </a>
