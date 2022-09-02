@@ -1,0 +1,21 @@
+{% extends 'disposition_standard.html.twig' %}
+
+{% block title %}Handi'chiens - Les chiens{% endblock %}
+
+{% block contenu %}
+    <h1>Les chiens</h1>
+    {% set bouton_ajouter_path = path('app_chien_ajouter') %}
+
+    {{ component('bouton', {href: bouton_ajouter_path, texte: 'Ajouter un chien'}) }}
+
+    {% if chiens is empty %}
+        <p>Aucun chien !</p>
+    {% else %}
+        <ul>
+            {% for chien in chiens %}
+                <li><a href="{{ path('app_chien_details', {chien: chien.id}) }}">{{ chien.nom }}</a></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+{% endblock %}

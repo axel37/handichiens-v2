@@ -35,6 +35,7 @@ security:
         # - { path: ^/admin, roles: ROLE_ADMIN }
          - { path: ^/disponibilite, roles: [ROLE_EDUCATEUR, ROLE_ADMIN] }
          - { path: ^/famille, roles: [ROLE_EDUCATEUR, ROLE_ADMIN] }
+         - { path: ^/chien, roles: [ROLE_EDUCATEUR, ROLE_ADMIN] }
          - { path: ^/mes-disponibilites, roles: ROLE_FAMILLE }
 
 when@test:

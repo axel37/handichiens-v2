@@ -1,0 +1,16 @@
+{% extends 'disposition_standard.html.twig' %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block contenu %}
+    <a href="{{ path('app_chien_index') }}">Voir tous les chiens</a>
+
+    <h1>Chien - {{ chien.nom }}</h1>
+    {{ dump(chien) }}
+
+    {% set bouton_modifier_path = path('app_chien_modifier', {chien: chien.id}) %}
+    {{ component('bouton', { href: bouton_modifier_path, texte: "Modifier" }) }}
+{% endblock %}
+

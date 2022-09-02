@@ -30,7 +30,7 @@ class Chien
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     #[Assert\NotBlank]
-    #[Assert\LessThan(
+    #[Assert\LessThanOrEqual(
         value: 'today'
         )]
     private ?\DateTimeImmutable $dateNaissance = null;
