@@ -1,0 +1,13 @@
+{% extends 'disposition_standard.html.twig' %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block contenu %}
+<h1>Ajouter un chien</h1>
+    {{ form(form) }}
+    {% set bouton_annuler_path = path('app_chien_index') %}
+    {{ component('bouton', {href: bouton_annuler_path, texte: 'Annuler'}) }}
+{% endblock %}
+
