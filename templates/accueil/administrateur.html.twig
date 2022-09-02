@@ -11,8 +11,8 @@
     <pre>User :</pre>
     {{ dump(app.user) }}
 
-    {{component('carte', { href: "/", texte: 'Test'})}}
+    {{component('carte', { type: "defaut", href: "/", textes: 'Test'})}}
 
-    {{component('carte', { href: "/", entite: app.user})}}
+    {{component('carte', { type: "utilisateur", href: "/", entite: app.user})}}
 
 {% endblock %}
