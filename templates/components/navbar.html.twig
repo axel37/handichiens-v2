@@ -45,5 +45,27 @@
 
 		</div>
 
+	{% else %}
+
+		<button class="navigation__toggle" {{ stimulus_action('navbar', 'toggleMenu')}}>
+			<span class="navigation__toggle--bar"></span>
+			<span class="navigation__toggle--bar"></span>
+			<span class="navigation__toggle--bar"></span>
+		</button>
+
+		<div class="navigation__menu" {{ stimulus_target('navbar', 'menuList') }}>
+
+			<ul class="navigation__menu--liste">
+				<li>
+					<a class="navigation__lien" href="{{ path('app_accueil') }}">Accueil</a>
+				</li>
+				<li>
+					{% set connexion_path = path('app_connexion') %}
+					{{component('bouton', { type: 'principal', href: connexion_path, texte: 'Connexion' })}}
+				</li>
+			</ul>
+
+		</div>
+
 	{% endif %}
 </nav>
