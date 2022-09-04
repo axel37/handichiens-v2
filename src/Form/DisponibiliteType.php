@@ -16,6 +16,8 @@ class DisponibiliteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $today = new DateTimeImmutable('now');
+        $dateDebut = new DateTimeImmutable('tomorrow 10am');
+        $dateFin = new DateTimeImmutable('+2 days 6pm');
         $anneeMin = $today->format('Y');
         $anneeMax = $today->add(new DateInterval('P1Y'))->format('Y');
 
@@ -25,14 +27,14 @@ class DisponibiliteType extends AbstractType
                 'label' => 'Début de la disponibilité',
                 'with_seconds' => false,
                 'years' => range($anneeMin, $anneeMax),
-                'data' => $today,
+                'data' => $dateDebut,
             ])
             ->add('fin', DateTimeType::class, [
                 'input' => 'datetime_immutable',
                 'label' => 'Fin de la disponibilité',
                 'with_seconds' => false,
                 'years' => range($anneeMin, $anneeMax),
-                'data' => $today->add(new DateInterval('P1D')),
+                'data' => $dateFin,
             ])
             ->add('libelle')
             ->add('ajouter', SubmitType::class)

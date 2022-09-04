@@ -6,8 +6,10 @@ use App\Repository\DisponibiliteRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Validator as CustomValidator;
 
 #[ORM\Entity(repositoryClass: DisponibiliteRepository::class)]
+#[CustomValidator\Disponibilite]
 class Disponibilite
 {
     #[ORM\Id]
@@ -33,33 +35,38 @@ class Disponibilite
     private ?Famille $famille = null;
 
     /**
-     * Vérifie que la disponibilité n'entre pas en conflit avec d'autres de la même famille
+     * Chaîne de caractères contenant :
+     * - La date de début
+     * - La date de fin
+     * - Le libellé s'il existe
      *
-     * - Vrai : Pas de conflit
-     * - Faux : Conflit !
-     * @return bool
+     * Les années ne sont ajoutées que si il ne s'agit pas de celle en cours.
+     * @return string
      */
-    #[Assert\IsTrue(
-        message: "Ces dates rentrent en conflit avec une disponibilité existante."
-    )]
-    public function isNotConflicting(): bool
+    public function __toString(): string
     {
-        $disponibilites = $this->famille->getDisponibilites();
+        $resultat = '';
+        $aujourdhui = new DateTimeImmutable('today');
+        $format = 'd F H\hi';
 
-        $isNotConflicting = $disponibilites->forAll(
-            function ($key, $value)
-            {
-                /*
-                La nouvelle disponibilité doit :
-                  - débuter après la fin d'une autre
-                    OU
-                  - prendre fin avant le début d'une autre
-                */
-                return ($value->getFin() < $this->debut) || ($value->getDebut() > $this->fin);
-            }
-        );
+        if ($this->debut->format('Y') !== $aujourdhui->format('Y'))
+        {
+            $format = 'd F y H\hi';
+        }
+        $resultat .= $this->debut->format($format);
 
-        return $isNotConflicting;
+        if ($this->fin->format('Y') !== $aujourdhui->format('Y'))
+        {
+            $format = 'd F y H\hi';
+        }
+        $resultat .= ' - ' . $this->fin->format($format);
+
+        if (isset($this->libelle))
+        {
+            $resultat .= ' (' . $this->libelle . ')';
+        }
+
+        return $resultat;
     }
 
     public function getId(): ?int
