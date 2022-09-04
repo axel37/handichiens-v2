@@ -113,6 +113,8 @@ class DisponibiliteController extends AbstractController
     public function ajouterAFamille(Famille $famille, Request $request, DisponibiliteRepository $dispoRepository): Response
     {
         $nouvelleDispo = new Disponibilite();
+        $nouvelleDispo->setFamille($famille);
+
         $form = $this->createForm(DisponibiliteType::class, $nouvelleDispo);
 
         $form->handleRequest($request);
@@ -121,7 +123,6 @@ class DisponibiliteController extends AbstractController
         {
 
             $nouvelleDispo = $form->getData();
-            $nouvelleDispo->setFamille($famille);
 
             $dispoRepository->add($nouvelleDispo, true);
 
