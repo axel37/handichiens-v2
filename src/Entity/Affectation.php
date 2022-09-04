@@ -40,6 +40,38 @@ class Affectation
     #[Assert\NotBlank]
     private ?Famille $famille = null;
 
+    /**
+     * Chaîne de caractères contenant :
+     * - La date de début
+     * - La date de fin
+     * - Si l'affectation n'est pas confirmée
+     *
+     * Les années ne sont ajoutées que si il ne s'agit pas de celle en cours.
+     * @return string
+     */
+    public function __toString(): string
+    {
+        $resultat = $this->chien . ' / Famille ' . $this->famille . ' : ';
+        $aujourdhui = new DateTimeImmutable('today');
+        $format = 'd F H\hi';
+
+        if ($this->debut->format('Y') !== $aujourdhui->format('Y')) {
+            $format = 'd F y H\hi';
+        }
+        $resultat .= $this->debut->format($format);
+
+        if ($this->fin->format('Y') !== $aujourdhui->format('Y')) {
+            $format = 'd F y H\hi';
+        }
+        $resultat .= ' - ' . $this->fin->format($format);
+
+        if (!$this->estConfirme) {
+            $resultat .= ' (Non confirmé)';
+        }
+
+        return $resultat;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
