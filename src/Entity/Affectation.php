@@ -10,6 +10,7 @@ use App\Validator as CustomValidator;
 
 #[ORM\Entity(repositoryClass: AffectationRepository::class)]
 #[CustomValidator\AffectationDisponibilite]
+#[CustomValidator\Affectation]
 class Affectation
 {
     #[ORM\Id]
