@@ -17,7 +17,7 @@ class Disponibilite
 
     #[ORM\Column]
     #[Assert\Type(DateTimeImmutable::class)]
-    #[Assert\GreaterThanOrEqual(value: 'today')]
+    #[Assert\GreaterThanOrEqual(value: 'now')]
     private ?\DateTimeImmutable $debut = null;
 
     #[ORM\Column]
@@ -31,6 +31,36 @@ class Disponibilite
     #[ORM\ManyToOne(inversedBy: 'disponibilites')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Famille $famille = null;
+
+    /**
+     * Vérifie que la disponibilité n'entre pas en conflit avec d'autres de la même famille
+     *
+     * - Vrai : Pas de conflit
+     * - Faux : Conflit !
+     * @return bool
+     */
+    #[Assert\IsTrue(
+        message: "Ces dates rentrent en conflit avec une disponibilité existante."
+    )]
+    public function isNotConflicting(): bool
+    {
+        $disponibilites = $this->famille->getDisponibilites();
+
+        $isNotConflicting = $disponibilites->forAll(
+            function ($key, $value)
+            {
+                /*
+                La nouvelle disponibilité doit :
+                  - débuter après la fin d'une autre
+                    OU
+                  - prendre fin avant le début d'une autre
+                */
+                return ($value->getFin() < $this->debut) || ($value->getDebut() > $this->fin);
+            }
+        );
+
+        return $isNotConflicting;
+    }
 
     public function getId(): ?int
     {
