@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Affectation;
+use App\Form\AffectationType;
 use App\Repository\AffectationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -20,8 +23,22 @@ class AffectationController extends AbstractController
     }
 
     #[Route('/affectation/ajouter', name: 'app_affectation_ajouter')]
-    public function ajouter(): Response
+    public function ajouter(Request $request, AffectationRepository $affectationRepository): Response
     {
-        // Todo
+        $nouvelleAffectation = new Affectation();
+        $form = $this->createForm(AffectationType::class);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $nouvelleAffectation = $form->getData();
+
+            $affectationRepository->add($nouvelleAffectation, true);
+        }
+
+        return $this->render('affectation/ajouter.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 }

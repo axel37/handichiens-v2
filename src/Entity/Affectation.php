@@ -6,8 +6,10 @@ use App\Repository\AffectationRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Validator as CustomValidator;
 
 #[ORM\Entity(repositoryClass: AffectationRepository::class)]
+#[CustomValidator\AffectationDisponibilite]
 class Affectation
 {
     #[ORM\Id]
@@ -18,7 +20,7 @@ class Affectation
     #[ORM\Column]
     #[Assert\NotBlank]
     #[Assert\Type(DateTimeImmutable::class)]
-    #[Assert\GreaterThanOrEqual(value: 'today')]
+    #[Assert\GreaterThanOrEqual(value: 'now')]
     private ?\DateTimeImmutable $debut = null;
 
     #[ORM\Column]
@@ -28,7 +30,7 @@ class Affectation
     private ?\DateTimeImmutable $fin = null;
 
     #[ORM\Column]
-    private ?bool $estConfirme = null;
+    private ?bool $estConfirme = false;
 
     #[ORM\ManyToOne(inversedBy: 'affectations')]
     #[ORM\JoinColumn(nullable: false)]

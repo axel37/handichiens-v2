@@ -1,0 +1,16 @@
+{% extends 'disposition_standard.html.twig' %}
+
+{% block title %}Handi'chiens - Nouvelle affectation{% endblock %}
+
+{% block contenu %}
+    <h1>Nouvelle affectation</h1>
+    {{ form(form) }}
+
+    {# TODO : La page précédente n'est pas forcément /affectation
+        Ce formulaire est accessible depuis plusieurs routes
+    #}
+    {% set bouton_annuler_path = path('app_affectation_index') %}
+    {{ component('bouton', {type: 'secondaire', texte: 'Annuler', href: bouton_annuler_path}) }}
+{% endblock %}
+
+
