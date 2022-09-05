@@ -30,11 +30,14 @@ class AffectationController extends AbstractController
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $nouvelleAffectation = $form->getData();
 
             $affectationRepository->add($nouvelleAffectation, true);
+
+            // TODO : Rediriger vers la route précédente plutôt que simplement la route index
+            $this->addFlash('success', 'Le chien a bien été affecté.');
+            return $this->redirectToRoute('app_affectation_index');
         }
 
         return $this->render('affectation/ajouter.html.twig', [

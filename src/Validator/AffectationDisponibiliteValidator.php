@@ -26,7 +26,7 @@ class AffectationDisponibiliteValidator extends ConstraintValidator
 
         $estDansDisponibilite = $disponibilites->exists(
             function ($key, $disponibilite) use ($value) {
-                return $disponibilite->getDebut() < $value->getDebut() && $disponibilite->getFin() > $value->getFin();
+                return $disponibilite->getDebut() <= $value->getDebut() && $disponibilite->getFin() >= $value->getFin();
             }
         );
 
