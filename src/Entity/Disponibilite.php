@@ -6,8 +6,10 @@ use App\Repository\DisponibiliteRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Validator as CustomValidator;
 
 #[ORM\Entity(repositoryClass: DisponibiliteRepository::class)]
+#[CustomValidator\Disponibilite]
 class Disponibilite
 {
     #[ORM\Id]
@@ -17,7 +19,7 @@ class Disponibilite
 
     #[ORM\Column]
     #[Assert\Type(DateTimeImmutable::class)]
-    #[Assert\GreaterThanOrEqual(value: 'today')]
+    #[Assert\GreaterThanOrEqual(value: 'now')]
     private ?\DateTimeImmutable $debut = null;
 
     #[ORM\Column]
@@ -30,8 +32,42 @@ class Disponibilite
 
     #[ORM\ManyToOne(inversedBy: 'disponibilites')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Assert\NotBlank]
     private ?Famille $famille = null;
+
+    /**
+     * Chaîne de caractères contenant :
+     * - La date de début
+     * - La date de fin
+     * - Le libellé s'il existe
+     *
+     * Les années ne sont ajoutées que si il ne s'agit pas de celle en cours.
+     * @return string
+     */
+    public function __toString(): string
+    {
+        $resultat = '';
+        $aujourdhui = new DateTimeImmutable('today');
+        $format = 'd F H\hi';
+
+        if ($this->debut->format('Y') !== $aujourdhui->format('Y'))
+        {
+            $format = 'd F y H\hi';
+        }
+        $resultat .= $this->debut->format($format);
+
+        if ($this->fin->format('Y') !== $aujourdhui->format('Y'))
+        {
+            $format = 'd F y H\hi';
+        }
+        $resultat .= ' - ' . $this->fin->format($format);
+
+        if (isset($this->libelle))
+        {
+            $resultat .= ' (' . $this->libelle . ')';
+        }
+
+        return $resultat;
+    }
 
     public function getId(): ?int
     {

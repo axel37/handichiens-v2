@@ -1,0 +1,20 @@
+{# Vue d'ensemble de toutes les disponibilités pour toutes les familles #}
+
+{% extends 'disposition_standard.html.twig' %}
+
+{% block title %}Handi'chiens - Toutes les disponibilités{% endblock %}
+
+{% block contenu %}
+    <h1>Toutes les disponibilités</h1>
+    <ul>
+        {% for dispo in disponibilites %}
+            <li>
+                <a href="{{ path('app_disponibilite_details', {disponibilite: dispo.id}) }}">Famille {{ dispo.famille ~ ' : ' ~ dispo.debut|format_date ~ ' - ' ~ dispo.fin|format_date }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}
+
+
+

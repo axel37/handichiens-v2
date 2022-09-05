@@ -1,0 +1,14 @@
+{% extends 'disposition_standard.html.twig' %}
+
+{% block title %}
+    Handi'chiens - Modification de {{ chien.nom }}
+{% endblock %}
+
+{% block contenu %}
+    <h1>{{ chien.nom }} - Modification</h1>
+    {{ form(form) }}
+
+    {% set bouton_annuler_path = path('app_chien_details', {chien: chien.id}) %}
+    {{ component('bouton', { href: bouton_annuler_path, texte: 'Annuler'}) }}
+{% endblock %}
+

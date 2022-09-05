@@ -30,9 +30,13 @@ security:
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
+    # IS_AUTHENTICATED_* : https://symfony.com/doc/current/security.html#checking-to-see-if-a-user-is-logged-in-is-authenticated-fully
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+         - { path: ^/disponibilite, roles: [ROLE_EDUCATEUR, ROLE_ADMIN] }
+         - { path: ^/famille, roles: [ROLE_EDUCATEUR, ROLE_ADMIN] }
+         - { path: ^/chien, roles: [ROLE_EDUCATEUR, ROLE_ADMIN] }
+         - { path: ^/mes-disponibilites, roles: ROLE_FAMILLE }
 
 when@test:
     security:

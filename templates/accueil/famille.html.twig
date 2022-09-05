@@ -4,23 +4,12 @@
 
 {% block contenu %}
 
-
+    <h1>Handi'chiens Vineuil - Accueil</h1>
 
     Bonjour <strong>{{ app.user.prenom ~ ' ' ~ app.user.nom }}</strong>.
     {# TODO : Vérifier que l'utilisateur est bien de type famille pour éviter toute erreur ? #}
-    <p>Vos disponibilités :</p>
-    <ul>
-        {% for disponibilite in app.user.disponibilites %}
-            <li>
-                {% if disponibilite.libelle is not null %}
-                    {{ disponibilite.libelle ~ ' : ' }}
-                {% endif %}
-                {{ disponibilite.debut|format_date ~ ' - ' ~ disponibilite.fin|format_date }}
-            </li>
-        {% endfor %}
-    </ul>
-    <p>Vos affectations :</p>
-    <pre>Note : Ne pas afficher les affectations directement, mais indiquer si elles correspondent aux disponibilités</pre>
+
+    <pre>Afficher un résumé des disponibilités et affectations</pre>
     <ul>
         {% for affectation in app.user.affectations %}
             <li>
@@ -30,9 +19,5 @@
     </ul>
 
     <a href="{{ path('app_deconnexion') }}">Se déconnecter.</a>
-
-
-    <pre>User :</pre>
-    {{ dump(app.user) }}
 
 {% endblock %}
