@@ -72,6 +72,7 @@ body {
 }
 
 /* COMPOSANTS */
+
 /* navigation */
 .navigation {
     max-width: 120rem;
@@ -247,6 +248,32 @@ body {
 
 .flash__error .flash__message{
     color: rgb(114, 28, 36);
+}
+
+/* cartes */
+
+.carte {
+    margin: 3.2rem;
+    padding: 3.2rem;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    max-width: 50rem;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+.carte__icones--image {
+    width: 5rem;
+    height: 5rem;
+}
+
+.carte__textes {
+    display: flex;
+    flex-direction: column;
+}
+
+.carte:hover {
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
 
 /* LAYOUT */

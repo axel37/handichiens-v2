@@ -1,0 +1,14 @@
+<a href="{{ href }}" class="carte">
+
+    <div class="carte__icones">
+        {% for img in icone %}
+            <img src="{{ img }}" alt="">
+        {% endfor %}
+    </div>
+
+    <div class="carte__textes">
+        {% for ligne in texte %}
+            <p>{{ ligne }}</p>
+        {% endfor %}
+    </div>
+</a>
