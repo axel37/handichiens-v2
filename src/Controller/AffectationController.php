@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Affectation;
 use App\Form\AffectationType;
 use App\Repository\AffectationRepository;
+use App\Repository\FamilleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,6 +22,21 @@ class AffectationController extends AbstractController
             'affectations' => $affectations
         ]);
     }
+
+    #[Route('/affectation/test', name: 'app_affectation_test')]
+    public function testQuery(FamilleRepository $familleRepository): Response
+    {
+        $debut = new \DateTimeImmutable('6 june 2022 2pm');
+        $fin = new \DateTimeImmutable('6 june 2022 3pm');
+        $familles = $familleRepository->findByDisponibilite($debut, $fin);
+
+        return $this->render('affectation/test.html.twig', [
+            'familles' => $familles,
+            'debut' => $debut,
+            'fin' => $fin
+        ]);
+    }
+
 
     #[Route('/affectation/ajouter', name: 'app_affectation_ajouter')]
     public function ajouter(Request $request, AffectationRepository $affectationRepository): Response

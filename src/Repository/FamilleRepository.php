@@ -2,9 +2,11 @@
 
 namespace App\Repository;
 
+use App\Entity\Disponibilite;
 use App\Entity\Famille;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Validator\Constraints\Date;
 
 /**
  * @extends ServiceEntityRepository<Famille>
@@ -37,6 +39,53 @@ class FamilleRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    /**
+     * Renvoie les familles disponibles sur le créneau indiqué.
+     * Si l'un des paramètres est *null* les familles seront celles qui :`
+     * - Ont une/des disponibilités commençant après $début
+     * - Ont une/des disponibilités se terminant avant $fin
+     * @param \DateTimeImmutable|null $debut
+     * @param \DateTimeImmutable|null $fin
+     * @return array
+     */
+    public function findByDisponibilite(?\DateTimeImmutable $debut, ?\DateTimeImmutable $fin): array
+    {
+        $subQuery = $this->_em->createQueryBuilder()
+            ->select('dispo')
+            ->from('App:Disponibilite', 'dispo')
+            ->andWhere('dispo.famille = f')
+            ->andWhere('dispo.debut <= :debut')
+            ->andWhere('dispo.fin >= :fin')
+            ;
+
+        $queryBuilder = $this->createQueryBuilder('f')
+            ->setParameter('debut', $debut)
+            ->setParameter('fin', $fin)
+        ;
+
+        // Au moins une disponibilité doit correspondre à la condition
+        $queryBuilder->andWhere($queryBuilder->expr()->exists($subQuery->getDQL()));
+
+                return $queryBuilder->getQuery()->getResult();
+
+
+//        $query = $this->_em->createQuery(
+//            'SELECT famille
+//                    FROM App\Entity\Famille famille
+//                    WHERE EXISTS(
+//                        SELECT dispo
+//                        FROM App:Disponibilite dispo
+//                            WHERE dispo.famille = famille
+//                                AND dispo.debut <= :debut
+//                                AND dispo.fin >= :fin
+//                        )'
+//        );
+//        $query->setParameter('debut', $debut)
+//            ->setParameter('fin', $fin);
+//
+//        return $query->getResult();
     }
 
 //    /**

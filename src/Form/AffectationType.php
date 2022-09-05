@@ -27,26 +27,28 @@ class AffectationType extends AbstractType
         $builder
             ->add('chien', EntityType::class, [
                 'class' => Chien::class,
-                'placeholder' => 'Aucun chien sélectionné'
+                'placeholder' => 'Aucun chien sélectionné',
+                'autocomplete' => true,
             ])
             ->add('famille', EntityType::class, [
                 'class' => Famille::class,
-                'placeholder' => 'Aucune famille sélectionnée'
+                'placeholder' => 'Aucune famille sélectionnée',
+                'disabled' => true,
             ])
-            ->add('debut', DateTimeType::class, [
-                'input' => 'datetime_immutable',
-                'label' => 'Début de la disponibilité',
-                'with_seconds' => false,
-                'years' => range($anneeMin, $anneeMax),
-                'data' => $dateDebut,
-            ])
-            ->add('fin', DateTimeType::class, [
-                'input' => 'datetime_immutable',
-                'label' => 'Fin de la disponibilité',
-                'with_seconds' => false,
-                'years' => range($anneeMin, $anneeMax),
-                'data' => $dateFin,
-            ])
+//            ->add('debut', DateTimeType::class, [
+//                'input' => 'datetime_immutable',
+//                'label' => 'Début de la disponibilité',
+//                'with_seconds' => false,
+//                'years' => range($anneeMin, $anneeMax),
+////                'data' => $dateDebut,
+//            ])
+//            ->add('fin', DateTimeType::class, [
+//                'input' => 'datetime_immutable',
+//                'label' => 'Fin de la disponibilité',
+//                'with_seconds' => false,
+//                'years' => range($anneeMin, $anneeMax),
+////                'data' => $dateFin,
+//            ])
             ->add('Enregistrer', SubmitType::class)
         ;
     }
