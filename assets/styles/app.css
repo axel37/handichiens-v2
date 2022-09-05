@@ -226,27 +226,18 @@ body {
 .flash__success {
     background-color: rgb(212, 237, 218);
     border-color: rgb(195, 230, 203);
+    color: rgb(21, 87, 36);
 }
 
 .flash__warning {
     background-color: rgb(255, 243, 205);
     border-color: rgb(255, 238, 186);
+    color: rgb(133, 100, 4);
 }
 
 .flash__error {
     background-color: rgb(248, 215, 218);
     border-color: rgb(245, 198, 203);
-}
-
-.flash__success .flash__message {
-    color: rgb(21, 87, 36);
-}
-
-.flash__warning .flash__message{
-    color: rgb(133, 100, 4);
-}
-
-.flash__error .flash__message{
     color: rgb(114, 28, 36);
 }
 
@@ -278,7 +269,7 @@ body {
 
 /* LAYOUT */
 
-header {
+.header {
     background-color: var(--gris);
     color: var(--blanc);
 }
