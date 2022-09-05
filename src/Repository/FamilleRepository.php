@@ -52,6 +52,8 @@ class FamilleRepository extends ServiceEntityRepository
      */
     public function findByDisponibilite(?\DateTimeImmutable $debut, ?\DateTimeImmutable $fin): array
     {
+        // TODO : Gérer si l'un des paramètres est null !
+
         $subQuery = $this->_em->createQueryBuilder()
             ->select('dispo')
             ->from('App:Disponibilite', 'dispo')
@@ -69,23 +71,6 @@ class FamilleRepository extends ServiceEntityRepository
         $queryBuilder->andWhere($queryBuilder->expr()->exists($subQuery->getDQL()));
 
                 return $queryBuilder->getQuery()->getResult();
-
-
-//        $query = $this->_em->createQuery(
-//            'SELECT famille
-//                    FROM App\Entity\Famille famille
-//                    WHERE EXISTS(
-//                        SELECT dispo
-//                        FROM App:Disponibilite dispo
-//                            WHERE dispo.famille = famille
-//                                AND dispo.debut <= :debut
-//                                AND dispo.fin >= :fin
-//                        )'
-//        );
-//        $query->setParameter('debut', $debut)
-//            ->setParameter('fin', $fin);
-//
-//        return $query->getResult();
     }
 
 //    /**

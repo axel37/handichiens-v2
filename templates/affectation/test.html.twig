@@ -5,14 +5,8 @@ Handi'chiens - Test
 {% endblock %}
 
 {% block contenu %}
-<h1>Test requête famille</h1>
-    <p>Liste des familles ayant des disponibilités comprises entre {{ debut|format_datetime }} et {{ fin|format_datetime }}</p>
-
-    <ul>
-        {% for famille in familles %}
-            <li>{{ famille }}</li>
-        {% endfor %}
-    </ul>
+    <h1>Test requête famille</h1>
+{{ component('affectation_choix_famille') }}
 {% endblock %}
 
 

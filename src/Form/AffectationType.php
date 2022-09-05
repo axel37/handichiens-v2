@@ -33,22 +33,21 @@ class AffectationType extends AbstractType
             ->add('famille', EntityType::class, [
                 'class' => Famille::class,
                 'placeholder' => 'Aucune famille sélectionnée',
-                'disabled' => true,
             ])
-//            ->add('debut', DateTimeType::class, [
-//                'input' => 'datetime_immutable',
-//                'label' => 'Début de la disponibilité',
-//                'with_seconds' => false,
-//                'years' => range($anneeMin, $anneeMax),
-////                'data' => $dateDebut,
-//            ])
-//            ->add('fin', DateTimeType::class, [
-//                'input' => 'datetime_immutable',
-//                'label' => 'Fin de la disponibilité',
-//                'with_seconds' => false,
-//                'years' => range($anneeMin, $anneeMax),
-////                'data' => $dateFin,
-//            ])
+            ->add('debut', DateTimeType::class, [
+                'input' => 'datetime_immutable',
+                'label' => 'Début de la disponibilité',
+                'with_seconds' => false,
+                'years' => range($anneeMin, $anneeMax),
+//                'data' => $dateDebut,
+            ])
+            ->add('fin', DateTimeType::class, [
+                'input' => 'datetime_immutable',
+                'label' => 'Fin de la disponibilité',
+                'with_seconds' => false,
+                'years' => range($anneeMin, $anneeMax),
+//                'data' => $dateFin,
+            ])
             ->add('Enregistrer', SubmitType::class)
         ;
     }

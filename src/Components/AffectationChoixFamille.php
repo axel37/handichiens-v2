@@ -2,32 +2,35 @@
 
 namespace App\Components;
 
-use App\Form\Type\AffectationChoixFamilleType;
-use Symfony\Component\Form\FormInterface;
+use App\Repository\FamilleRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
-use Symfony\UX\LiveComponent\ComponentWithFormTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 
 #[AsLiveComponent('affectation_choix_famille')]
-class AffectationChoixFamille extends \Symfony\Bundle\FrameworkBundle\Controller\AbstractController
+class AffectationChoixFamille extends AbstractController
 {
-    use ComponentWithFormTrait;
     use DefaultActionTrait;
 
     #[LiveProp(writable: true)]
-    public ?\DateTimeImmutable $debut;
-
+    public ?\DateTimeImmutable $debut = null;
     #[LiveProp(writable: true)]
-    public ?\DateTimeImmutable $fin;
+    public ?\DateTimeImmutable $fin = null;
 
-    protected function instantiateForm(): FormInterface
+    public function __construct(FamilleRepository $familleRepository)
     {
-        return $this->createForm(AffectationChoixFamilleType::class);
+        $this->familleRepository = $familleRepository;
     }
 
-    public function getFamilles()
+    public function getFamilles(): array
     {
-        // Liste des familles ayant une disponibilité pour début et fin
+        // TODO : Temporaire, devrait être géré dans le Repository
+        if (!isset($this->debut) && !isset($this->fin))
+        {
+            return [];
+        }
+
+        return $this->familleRepository->findByDisponibilite($this->debut, $this->fin);
     }
 }

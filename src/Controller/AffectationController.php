@@ -24,16 +24,9 @@ class AffectationController extends AbstractController
     }
 
     #[Route('/affectation/test', name: 'app_affectation_test')]
-    public function testQuery(FamilleRepository $familleRepository): Response
+    public function testQuery(): Response
     {
-        $debut = new \DateTimeImmutable('6 june 2022 2pm');
-        $fin = new \DateTimeImmutable('6 june 2022 3pm');
-        $familles = $familleRepository->findByDisponibilite($debut, $fin);
-
         return $this->render('affectation/test.html.twig', [
-            'familles' => $familles,
-            'debut' => $debut,
-            'fin' => $fin
         ]);
     }
 
