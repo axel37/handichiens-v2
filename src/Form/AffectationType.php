@@ -3,8 +3,11 @@
 namespace App\Form;
 
 use App\Entity\Affectation;
+use App\Entity\Chien;
+use App\Entity\Famille;
 use DateInterval;
 use DateTimeImmutable;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -22,8 +25,14 @@ class AffectationType extends AbstractType
         $anneeMax = $today->add(new DateInterval('P1Y'))->format('Y');
 
         $builder
-            ->add('chien')
-            ->add('famille')
+            ->add('chien', EntityType::class, [
+                'class' => Chien::class,
+                'placeholder' => 'Aucun chien sélectionné'
+            ])
+            ->add('famille', EntityType::class, [
+                'class' => Famille::class,
+                'placeholder' => 'Aucune famille sélectionnée'
+            ])
             ->add('debut', DateTimeType::class, [
                 'input' => 'datetime_immutable',
                 'label' => 'Début de la disponibilité',
