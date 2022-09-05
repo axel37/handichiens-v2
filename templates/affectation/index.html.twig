@@ -1,0 +1,24 @@
+{#
+Liste des affectations
+    affectations : liste des affectations
+#}
+
+{% extends 'disposition_standard.html.twig' %}
+
+{% block title %}Handi'chiens - Affectations{% endblock %}
+
+{% block contenu %}
+    <h1>Affectations</h1>
+    {% set bouton_ajouter_path = path('app_affectation_ajouter') %}
+    {{ component('bouton', {href: bouton_ajouter_path, texte: 'Nouvelle affectation'}) }}
+    {% if affectations is empty %}
+        <p>Aucune affectation !</p>
+    {% else %}
+        <ul>
+            {% for affectation in affectations %}
+                <li>{{ affectation }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+{% endblock %}

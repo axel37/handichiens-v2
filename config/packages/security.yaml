@@ -34,6 +34,7 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
          - { path: ^/disponibilite, roles: [ROLE_EDUCATEUR, ROLE_ADMIN] }
+         - { path: ^/affectation, roles: [ROLE_EDUCATEUR, ROLE_ADMIN] }
          - { path: ^/famille, roles: [ROLE_EDUCATEUR, ROLE_ADMIN] }
          - { path: ^/chien, roles: [ROLE_EDUCATEUR, ROLE_ADMIN] }
          - { path: ^/mes-disponibilites, roles: ROLE_FAMILLE }

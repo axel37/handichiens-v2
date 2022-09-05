@@ -6,8 +6,11 @@ use App\Repository\AffectationRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Validator as CustomValidator;
 
 #[ORM\Entity(repositoryClass: AffectationRepository::class)]
+#[CustomValidator\AffectationDisponibilite]
+#[CustomValidator\Affectation]
 class Affectation
 {
     #[ORM\Id]
@@ -18,7 +21,7 @@ class Affectation
     #[ORM\Column]
     #[Assert\NotBlank]
     #[Assert\Type(DateTimeImmutable::class)]
-    #[Assert\GreaterThanOrEqual(value: 'today')]
+    #[Assert\GreaterThanOrEqual(value: 'now')]
     private ?\DateTimeImmutable $debut = null;
 
     #[ORM\Column]
@@ -28,7 +31,7 @@ class Affectation
     private ?\DateTimeImmutable $fin = null;
 
     #[ORM\Column]
-    private ?bool $estConfirme = null;
+    private ?bool $estConfirme = false;
 
     #[ORM\ManyToOne(inversedBy: 'affectations')]
     #[ORM\JoinColumn(nullable: false)]
@@ -39,6 +42,38 @@ class Affectation
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotBlank]
     private ?Famille $famille = null;
+
+    /**
+     * Chaîne de caractères contenant :
+     * - La date de début
+     * - La date de fin
+     * - Si l'affectation n'est pas confirmée
+     *
+     * Les années ne sont ajoutées que si il ne s'agit pas de celle en cours.
+     * @return string
+     */
+    public function __toString(): string
+    {
+        $resultat = $this->chien . ' / Famille ' . $this->famille . ' : ';
+        $aujourdhui = new DateTimeImmutable('today');
+        $format = 'd F H\hi';
+
+        if ($this->debut->format('Y') !== $aujourdhui->format('Y')) {
+            $format = 'd F y H\hi';
+        }
+        $resultat .= $this->debut->format($format);
+
+        if ($this->fin->format('Y') !== $aujourdhui->format('Y')) {
+            $format = 'd F y H\hi';
+        }
+        $resultat .= ' - ' . $this->fin->format($format);
+
+        if (!$this->estConfirme) {
+            $resultat .= ' (Non confirmé)';
+        }
+
+        return $resultat;
+    }
 
     public function getId(): ?int
     {
