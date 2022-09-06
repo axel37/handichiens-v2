@@ -2,11 +2,13 @@
     "devDependencies": {
         "@hotwired/stimulus": "^3.0.0",
         "@symfony/stimulus-bridge": "^3.2.0",
+        "@symfony/ux-autocomplete": "file:vendor/symfony/ux-autocomplete/assets",
         "@symfony/ux-live-component": "file:vendor/symfony/ux-live-component/assets",
         "@symfony/webpack-encore": "^3.0.0",
         "core-js": "^3.23.0",
         "maildev": "^2.0.5",
         "regenerator-runtime": "^0.13.9",
+        "tom-select": "^2.0.1",
         "webpack-notifier": "^1.15.0"
     },
     "license": "UNLICENSED",
@@ -17,5 +19,7 @@
         "watch": "encore dev --watch",
         "build": "encore production --progress"
     },
-    "dependencies": {}
+    "dependencies": {
+
+    }
 }

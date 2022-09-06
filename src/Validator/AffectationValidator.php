@@ -21,6 +21,12 @@ class AffectationValidator extends ConstraintValidator
             throw new UnexpectedTypeException($value, \App\Entity\Affectation::class);
         }
 
+        $chien = $value->getChien();
+        if (!isset($chien))
+        {
+            return;
+        }
+
         $affectations = $value->getChien()->getAffectations();
 
         foreach ($affectations as $affectation) {

@@ -16,7 +16,7 @@ Liste des affectations
     {% else %}
         <ul>
             {% for affectation in affectations %}
-                <li>{{ affectation }}</li>
+                <li><a href="{{ path('app_affectation_details', {affectation: affectation.id}) }}">{{ affectation }}</a></li>
             {% endfor %}
         </ul>
     {% endif %}
