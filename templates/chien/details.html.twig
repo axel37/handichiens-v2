@@ -12,5 +12,8 @@
 
     {% set bouton_modifier_path = path('app_chien_modifier', {chien: chien.id}) %}
     {{ component('bouton', { href: bouton_modifier_path, texte: "Modifier" }) }}
+
+    {% set bouton_supprimer_path = path('app_chien_supprimer', {chien: chien.id}) %}
+    {{ component('bouton', { href: bouton_supprimer_path, texte: "Supprimer", type: 'danger' }) }}
 {% endblock %}
 

@@ -32,7 +32,7 @@ class Chien
     #[Assert\NotBlank]
     #[Assert\LessThanOrEqual(
         value: 'today'
-        )]
+    )]
     private ?\DateTimeImmutable $dateNaissance = null;
 
     #[ORM\Column(length: 100)]
@@ -72,12 +72,15 @@ class Chien
     #[ORM\Column(nullable: true)]
     private ?DateTimeImmutable $dateModificationPhoto = null;
 
+    #[ORM\Column(options: ['default' => false])]
+    private ?bool $supprime = false;
+
     public function __construct()
     {
         $this->affectations = new ArrayCollection();
     }
 
-    public function __toString() : string
+    public function __toString(): string
     {
         return $this->getNom();
     }
@@ -196,6 +199,26 @@ class Chien
         return $this;
     }
 
+
+    /**
+     * Supprime les données du chien
+     *
+     * @return $this
+     */
+    public function anonymiser(): self
+    {
+        // TODO : Cela aurait plus de sens si les valeurs devenaient NULL plutôt que des valeurs arbitraires !
+        // TODO : Photo pas supprimée
+        $this
+            ->setNom('Chien supprimé')
+            ->setPhoto(null)
+            ->setRace('Chien supprimé')
+            ->setDateNaissance(new DateTimeImmutable('0000-01-01'))
+            ->setSupprime(true);
+
+        return $this;
+    }
+
     private function getDateModification(): ?DateTimeImmutable
     {
         return $this->dateModificationPhoto;
@@ -204,6 +227,18 @@ class Chien
     private function setDateModification(?DateTimeImmutable $dateModification): self
     {
         $this->dateModificationPhoto = $dateModification;
+
+        return $this;
+    }
+
+    public function isSupprime(): ?bool
+    {
+        return $this->supprime;
+    }
+
+    public function setSupprime(bool $supprime): self
+    {
+        $this->supprime = $supprime;
 
         return $this;
     }

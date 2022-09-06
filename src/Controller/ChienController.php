@@ -72,4 +72,15 @@ class ChienController extends AbstractController
             'chien' => $chien
         ]);
     }
+
+    #[Route('/chien/{chien}/supprimer', name: 'app_chien_supprimer')]
+    public function supprimer(Chien $chien, ChienRepository $chienRepository): Response
+    {
+
+        $chien->anonymiser();
+
+        $chienRepository->add($chien, true);
+
+        return $this->redirectToRoute('app_chien_index');
+    }
 }
