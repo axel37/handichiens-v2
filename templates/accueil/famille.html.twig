@@ -10,14 +10,20 @@
             {# TODO : Vérifier que l'utilisateur est bien de type famille pour éviter toute erreur ? #}
             <p>Vous êtes connecté en tant que Famille Relais</p>
 
-            <pre>Afficher un résumé des disponibilités et affectations</pre>
-            <ul>
-                {% for affectation in app.user.affectations %}
-                    <li>
-                        {{ affectation.debut|date ~ ' - ' ~ affectation.fin|date }}
-                    </li>
-                {% endfor %}
-            </ul>
+            <h2 class="titre__secondaire">Mes Affectations</h2>
+                <ul>
+                    {% if app.user.affectations is empty %}
+                        <li><p>Aucune affectations vous a été attribué !</p></li>
+                    {% else %}
+                        {% for affectation in app.user.affectations %}
+                            <li>
+                                {{ affectation.debut|date ~ ' - ' ~ affectation.fin|date }}
+                            </li>
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+
+            <h2 class="titre__secondaire">Mes Disponibilités</h2>
 
             <ul>
                 {% for disponibilite in app.user.disponibilites %}
