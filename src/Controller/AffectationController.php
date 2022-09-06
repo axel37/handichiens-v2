@@ -34,18 +34,23 @@ class AffectationController extends AbstractController
 
 
     #[Route('/affectation/ajouter', name: 'app_affectation_ajouter')]
-    public function ajouter(Request $request, AffectationRepository $affectationRepository, ChienRepository $chienRepository): Response
+    public function ajouter(Request $request, AffectationRepository $affectationRepository, ChienRepository $chienRepository, FamilleRepository $familleRepository): Response
     {
         // Récupération des paramètres de l'url / GET : debut, fin et chien
         // Nous renseignons des dates par défaut si aucune n'est fournies (pour éviter 01/01/20XX) dans les deux champs)
         $dateDebut = new DateTimeImmutable($request->query->get('debut')) ?? new DateTimeImmutable('tomorrow 10am');
         $dateFin = new DateTimeImmutable($request->query->get('fin')) ?? new DateTimeImmutable('+2 days 6pm');
         $chien = $chienRepository->findOneById($request->query->get('chien'));
+        $famille = $familleRepository->findOneById($request->query->get('famille'));
 
+        // TODO : La famille n'est pas sélectionnée si une date est aussi passée en paramètre
+
+        // Création de l'affectation
         $nouvelleAffectation = new Affectation();
         $nouvelleAffectation->setDebut($dateDebut);
         $nouvelleAffectation->setFin($dateFin);
         $nouvelleAffectation->setChien($chien);
+        $nouvelleAffectation->setFamille($famille);
 
         $form = $this->createForm(AffectationType::class, $nouvelleAffectation);
 
