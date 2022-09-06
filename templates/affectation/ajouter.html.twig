@@ -4,7 +4,9 @@
 
 {% block contenu %}
     <h1>Nouvelle affectation</h1>
-    {{ form(form) }}
+{#    {{ form(form) }}#}
+    {{ component('affectation_form', {form: form, affectation: nouvelleAffectation.id ? affectation: null}) }}
+
 
     {# TODO : La page précédente n'est pas forcément /affectation
         Ce formulaire est accessible depuis plusieurs routes

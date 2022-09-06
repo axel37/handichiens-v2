@@ -50,7 +50,8 @@ class AffectationController extends AbstractController
         }
 
         return $this->render('affectation/ajouter.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'nouvelleAffectation' => $nouvelleAffectation
         ]);
     }
 }

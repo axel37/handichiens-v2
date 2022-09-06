@@ -22,6 +22,13 @@ class AffectationDisponibiliteValidator extends ConstraintValidator
             throw new UnexpectedTypeException($value, Affectation::class);
         }
 
+        $famille = $value->getFamille();
+
+        if (!isset($famille))
+        {
+            return;
+        }
+
         $disponibilites = $value->getFamille()->getDisponibilites();
 
         $estDansDisponibilite = $disponibilites->exists(

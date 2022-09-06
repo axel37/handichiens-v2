@@ -54,23 +54,36 @@ class FamilleRepository extends ServiceEntityRepository
     {
         // TODO : Gérer si l'un des paramètres est null !
 
+        if (!isset($debut) && !isset($fin)) {
+            return [];
+        }
+
         $subQuery = $this->_em->createQueryBuilder()
             ->select('dispo')
             ->from('App:Disponibilite', 'dispo')
             ->andWhere('dispo.famille = f')
-            ->andWhere('dispo.debut <= :debut')
-            ->andWhere('dispo.fin >= :fin')
-            ;
+//            ->andWhere('dispo.debut <= :debut')
+//            ->andWhere('dispo.fin >= :fin')
+        ;
 
         $queryBuilder = $this->createQueryBuilder('f')
-            ->setParameter('debut', $debut)
-            ->setParameter('fin', $fin)
+//            ->setParameter('debut', $debut)
+//            ->setParameter('fin', $fin)
         ;
+
+        if (isset($debut)) {
+            $subQuery->andWhere('dispo.debut <= :debut');
+            $queryBuilder->setParameter('debut', $debut);
+        }
+        if (isset($fin)) {
+            $subQuery->andWhere('dispo.fin >= :fin');
+            $queryBuilder->setParameter('fin', $fin);
+        }
 
         // Au moins une disponibilité doit correspondre à la condition
         $queryBuilder->andWhere($queryBuilder->expr()->exists($subQuery->getDQL()));
 
-                return $queryBuilder->getQuery()->getResult();
+        return $queryBuilder->getQuery()->getResult();
     }
 
 //    /**
