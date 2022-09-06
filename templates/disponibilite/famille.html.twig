@@ -35,11 +35,17 @@ Les disponibilités d'une famille
     {% else %}
         <ul>
             {% for dispo in famille.disponibilites %}
-                <li>
-                    {{ dispo.debut|format_date ~ ' - ' ~ dispo.fin|format_date }}
-                    {% if dispo.libelle %}
-                        ({{ dispo.libelle }})
-                    {% endif %}
+                {% if dispo.famille == app.user %}
+                    {% set dispo_path = path('app_mes_disponibilites_details', {disponibilite: dispo.id}) %}
+                {% else %}
+                    {% set dispo_path = path('app_disponibilite_details', {disponibilite: dispo.id}) %}
+                {% endif %}
+                <li><a href="{{ dispo_path }}">
+                        {{ dispo.debut|format_date ~ ' - ' ~ dispo.fin|format_date }}
+                        {% if dispo.libelle %}
+                            ({{ dispo.libelle }})
+                        {% endif %}
+                    </a>
                 </li>
             {% endfor %}
         </ul>

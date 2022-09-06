@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Affectation;
+use App\Entity\Disponibilite;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -37,6 +38,35 @@ class AffectationRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    /**
+     * Renvoie les affectations correspondant à une disponibilité
+     *
+     * Étant donné qu'il n'existe aucune relation entre une disponibilité et une affectation,
+     * la correspondance est établie de la manière suivante :
+     *
+     * - L'affectation et la disponibilité sont liées à la même famille
+     * - Les dates de l'affectation sont comprises dans les limites de la disponibilité
+     *
+     *
+     * @param Disponibilite $disponibilite
+     * @return array
+     */
+    public function findByDisponibilite(Disponibilite $disponibilite): array
+    {
+        return $this->createQueryBuilder('affectation')
+            ->andWhere('affectation.famille = :disp_famille')
+            ->andWhere('affectation.debut >= :disp_debut')
+            ->andWhere('affectation.fin <= :disp_fin')
+            ->setParameter('disp_famille', $disponibilite->getFamille())
+            ->setParameter('disp_debut', $disponibilite->getDebut())
+            ->setParameter('disp_fin', $disponibilite->getFin())
+
+            ->getQuery()
+            ->getResult()
+        ;
+
     }
 
 //    /**

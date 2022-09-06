@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Disponibilite;
 use App\Entity\Famille;
 use App\Form\DisponibiliteType;
+use App\Repository\AffectationRepository;
 use App\Repository\DisponibiliteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,7 +23,7 @@ class DisponibiliteController extends AbstractController
     public function mesDispo(): Response
     {
         if ($this->isGranted('ROLE_FAMILLE') && $this->getUser() instanceof Famille) {
-            return $this->renderPlanning($this->getUser());
+            return $this->renderListeDisponibilites($this->getUser());
         } else {
             throw new AccessDeniedHttpException("Vous devez être authentifié en tant que famille pour accéder à cette ressource.");
         }
@@ -61,6 +62,40 @@ class DisponibiliteController extends AbstractController
     }
 
     /**
+     * Vue d'une disponibilité par une famille
+     * @param Disponibilite $disponibilite
+     * @return void
+     */
+    #[Route('/mes-disponibilites/{disponibilite}', name: 'app_mes_disponibilites_details')]
+    public function mesDisposDetails(Disponibilite $disponibilite, AffectationRepository $affectationRepository): Response
+    {
+        return $this->renderDetailsDisponibilite($disponibilite, $affectationRepository);
+    }
+
+    /**
+     * Suppression d'une disponibilité par une famille
+     * @param Disponibilite $disponibilite
+     * @return void
+     */
+    #[Route('/mes-disponibilites/{disponibilite}/supprimer', name: 'app_mes_disponibilites_supprimer')]
+    public function mesDisposSupprimer(Disponibilite $disponibilite, AffectationRepository $affectationRepository, DisponibiliteRepository $disponibiliteRepository): Response
+    {
+        $disponibiliteConcernees = $affectationRepository->findByDisponibilite($disponibilite);
+
+        if ($disponibiliteConcernees !== [])
+        {
+            $this->addFlash('warning', 'Suppression impossible : Un ou plusieurs chiens sont affectés sur cette disponibilité.');
+        }
+        else
+        {
+            $disponibiliteRepository->remove($disponibilite, true);
+            $this->addFlash('success', 'Disponibilité supprimée.');
+        }
+
+        return $this->redirectToRoute('app_mes_disponibilites');
+    }
+
+    /**
      * Liste des disponibilités de toutes les familles
      * @param DisponibiliteRepository $dispoRepo
      * @return Response
@@ -85,12 +120,37 @@ class DisponibiliteController extends AbstractController
      * @return Response
      */
     #[Route('/disponibilite/{disponibilite}', name: 'app_disponibilite_details')]
-    public function details(Disponibilite $disponibilite): Response
+    public function details(Disponibilite $disponibilite, AffectationRepository $affectationRepository): Response
     {
-        return $this->render('/disponibilite/details.html.twig', [
-            'disponibilite' => $disponibilite
-        ]);
+        return $this->renderDetailsDisponibilite($disponibilite, $affectationRepository);
     }
+
+    /**
+     * Suppression d'une disponibilité par un éducateur
+     * @param Disponibilite $disponibilite
+     * @return Response
+     */
+    #[Route('/disponibilite/{disponibilite}/supprimer', name: 'app_disponibilite_supprimer')]
+    public function supprimer(Disponibilite $disponibilite, Request $request, AffectationRepository $affectationRepository, DisponibiliteRepository $disponibiliteRepository): Response
+    {
+        // Utilisé pour la redirection après suppression
+        $famille = $disponibilite->getFamille();
+
+        $disponibiliteConcernees = $affectationRepository->findByDisponibilite($disponibilite);
+
+        if ($disponibiliteConcernees !== [])
+        {
+            $this->addFlash('warning', 'Suppression impossible : Un ou plusieurs chiens sont affectés sur cette disponibilité.');
+        }
+        else
+        {
+            $disponibiliteRepository->remove($disponibilite, true);
+            $this->addFlash('success', 'Disponibilité supprimée.');
+        }
+
+        return $this->redirectToRoute('app_disponibilite_famille', ['famille' => $famille->getId()]);
+    }
+
 
 
     /**
@@ -101,7 +161,7 @@ class DisponibiliteController extends AbstractController
     #[Route('famille/{famille}/disponibilite', name: 'app_disponibilite_famille')]
     public function parFamille(Famille $famille): Response
     {
-        return $this->renderPlanning($famille);
+        return $this->renderListeDisponibilites($famille);
     }
 
     /**
@@ -143,10 +203,27 @@ class DisponibiliteController extends AbstractController
      * @param Famille $famille
      * @return Response
      */
-    private function renderPlanning(Famille $famille): Response
+    private function renderListeDisponibilites(Famille $famille): Response
     {
         return $this->render('/disponibilite/famille.html.twig', [
             'famille' => $famille,
+        ]);
+    }
+
+    /**
+     * Affiche les détails de la disponibilité passée en paramètre
+     *
+     * @param Disponibilite $disponibilite
+     * @param AffectationRepository $affectationRepository
+     * @return Response
+     */
+    private function renderDetailsDisponibilite(Disponibilite $disponibilite, AffectationRepository $affectationRepository): Response
+    {
+        $affectations = $affectationRepository->findByDisponibilite($disponibilite);
+
+        return $this->render('disponibilite/details.html.twig', [
+            'disponibilite' => $disponibilite,
+            'affectations' => $affectations
         ]);
     }
 }

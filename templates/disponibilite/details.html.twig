@@ -3,8 +3,41 @@
 {% block title %}Handi'chiens - Disponibilité de la famille {{ disponibilite.famille }}{% endblock %}
 
 {% block contenu %}
-    <h1>Disponibilité de la famille {{ disponibilite.famille }}</h1>
+    <h1>
+        {% if app.user == disponibilite.famille %}
+            Votre disponibilité
+        {% else %}
+            Disponibilité de la famille {{ disponibilite.famille }}
+        {% endif %}
+    </h1>
 
     {{ disponibilite.debut|format_datetime ~ ' - ' ~ disponibilite.fin|format_datetime }}
+
+    {% if instance_of(app.user, 'App\\Entity\\Famille') %}
+        {% set bouton_suppr_path = path('app_mes_disponibilites_supprimer', {disponibilite: disponibilite.id}) %}
+    {% else %}
+        {% set bouton_suppr_path = path('app_disponibilite_supprimer', {disponibilite: disponibilite.id}) %}
+    {% endif %}
+    {{ component('bouton', {texte: 'Supprimer', type: 'danger', href: bouton_suppr_path}) }}
+
+    {% if affectations is not empty %}
+        <h2>Chiens affectés sur cette disponibilité</h2>
+        <ul>
+            {% for affectation in affectations %}
+                <li>
+                    {# Ne pas afficher vers le chien si l'utilisateur est une famille #}
+                    {% if instance_of(app.user, 'App\\Entity\\Famille') %}
+                        {{ affectation.chien }}
+                    {% else %}
+                        <a href="{{ path('app_chien_details', {chien: affectation.chien.id }) }}">{{ affectation.chien }}</a>
+                    {% endif %}
+                    : Du {{ affectation.debut|format_datetime }} au {{ affectation.fin|format_datetime }}
+                    {% if affectation.confirme != true %}
+                        (Non confirmée)
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 {% endblock %}
 
