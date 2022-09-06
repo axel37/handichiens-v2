@@ -1,0 +1,12 @@
+{% extends 'disposition_standard.html.twig' %}
+
+{% block title %}Handi'chiens - Affectation {{ affectation.chien }} / famille {{ affectation.famille }}{% endblock %}
+
+{% block contenu %}
+    <h1>Affectation : {{ affectation.chien }} chez la famille {{ affectation.famille }}</h1>
+    {{ dump(affectation) }}
+
+    {% set bouton_supprimer_path = path('app_affectation_supprimer', {affectation: affectation.id}) %}
+    {{ component('bouton', {type:'danger', href: bouton_supprimer_path, texte: 'Supprimer' }) }}
+{% endblock %}
+

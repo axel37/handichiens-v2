@@ -63,4 +63,25 @@ class AffectationController extends AbstractController
             'nouvelleAffectation' => $nouvelleAffectation
         ]);
     }
+
+    #[Route('/affectation/{affectation}', name: 'app_affectation_details')]
+    public function details(Affectation $affectation): Response
+    {
+        return $this->render('affectation/details.html.twig', [
+            'affectation' => $affectation
+        ]);
+    }
+
+    #[Route('/affectation/{affectation}/supprimer',  name: 'app_affectation_supprimer')]
+    public function supprimer(Affectation $affectation, AffectationRepository $affectationRepository): Response
+    {
+        if ($affectation->isConfirme())
+        {
+            // TODO : Notifier la famille
+        }
+        $affectationRepository->remove($affectation, true);
+        $this->addFlash('success', 'L\'affectation a été supprimée');
+
+        return $this->redirectToRoute('app_affectation_index');
+    }
 }
