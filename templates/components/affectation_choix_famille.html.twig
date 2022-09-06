@@ -5,12 +5,12 @@
             type="date"
             data-model="debut"
 {#            TODO : Sinon l'input se remet à zéro à chaque changement#}
-{#            value="{{ debut }}"#}
+            value="{{ debut|date('Y-m-d') }}"
     >
     <input
             type="date"
             data-model="fin"
-{#            value="{{ fin }}"#}
+            value="{{ fin|date('Y-m-d') }}"
     >
 
     <p>Requête :</p>
