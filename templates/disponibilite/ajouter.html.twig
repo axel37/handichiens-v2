@@ -7,22 +7,39 @@ Formulaire d'ajout de disponibilité
 {% block title %}Handi'chiens - Nouvelle disponibilité{% endblock %}
 
 {% block contenu %}
-    <h1>
-        Nouvelle disponibilité
-        {% if famille != app.user %}
-            - Famille {{ famille.nom }}
-        {% endif %}
-    </h1>
 
-    {{ form(form) }}
-
-    {% if is_granted('ROLE_FAMILLE') %}
-        {% set bouton_annuler_path = path('app_mes_disponibilites') %}
-        {{ component('bouton', {type: 'secondaire', href: bouton_annuler_path, texte: "Annuler"}) }}
-    {% else %}
-        {% set bouton_annuler_path = path('app_disponibilite_famille', {famille: famille.id}) %}
-        {{ component('bouton', {type: 'secondaire', href: bouton_annuler_path, texte: "Annuler"}) }}
-    {% endif %}
+    <div class="form">
+        <h1 class="form__titre">
+            Nouvelle disponibilité
+            {% if famille != app.user %}
+                - Famille {{ famille.nom }}
+            {% endif %}
+        </h1>
+        {{ form_start(form)}}
+            <div class="form__element">
+                {{ form_label(form.debut,null, {'label_attr': {'class': 'form__element-label'}}) }}
+                {{ form_widget(form.debut,{'attr': {'class': 'form__element-datetime'}}) }}
+            </div>
+            <div class="form__element">
+                {{ form_label(form.fin,null, {'label_attr': {'class': 'form__element-label'}}) }}
+                {{ form_widget(form.fin,{'attr': {'class': 'form__element-datetime'}}) }}
+            </div>
+            <div class="form__element">
+                {{ form_label(form.libelle,null, {'label_attr': {'class': 'form__element-label'}}) }}
+                {{ form_widget(form.libelle,{'attr': {'class': 'form__element-text'}}) }}
+            </div>
+            <div class="form__boutons">
+            {{ form_widget(form.ajouter, {'attr': {'class': 'bouton bouton__principal form__submit'}})}}
+            {% if is_granted('ROLE_FAMILLE') %}
+                {% set bouton_annuler_path = path('app_mes_disponibilites') %}
+                {{ component('bouton', {type: 'secondaire', href: bouton_annuler_path, texte: "Annuler"}) }}
+            {% else %}
+                {% set bouton_annuler_path = path('app_disponibilite_famille', {famille: famille.id}) %}
+                {{ component('bouton', {type: 'secondaire', href: bouton_annuler_path, texte: "Annuler"}) }}
+            {% endif %}
+            </div>
+        {{ form_end(form)}}
+    </div>
 
     {# TODO : Nous devons passer la famille à la vue pour choisir un titre et générer un lien "Annuler" pour l'éducateur #}
 {% endblock %}

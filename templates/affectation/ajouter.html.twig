@@ -3,14 +3,37 @@
 {% block title %}Handi'chiens - Nouvelle affectation{% endblock %}
 
 {% block contenu %}
-    <h1>Nouvelle affectation</h1>
-    {{ form(form) }}
 
-    {# TODO : La page précédente n'est pas forcément /affectation
-        Ce formulaire est accessible depuis plusieurs routes
-    #}
-    {% set bouton_annuler_path = path('app_affectation_index') %}
-    {{ component('bouton', {type: 'secondaire', texte: 'Annuler', href: bouton_annuler_path}) }}
+<div class="form">
+    <h1 class="form__titre">Nouvelle affectation</h1>
+    {{ form_start(form) }}
+        <div class="form__element">
+            {{ form_label(form.chien,null, {'label_attr': {'class': 'form__element-label'}}) }}
+            {{ form_widget(form.chien,{'attr': {'class': 'form__element-text'}}) }}
+        </div>
+        <div class="form__element">
+            {{ form_label(form.famille,null, {'label_attr': {'class': 'form__element-label'}}) }}
+            {{ form_widget(form.famille,{'attr': {'class': 'form__element-text'}}) }}
+        </div>
+        <div class="form__element">
+            {{ form_label(form.debut,null, {'label_attr': {'class': 'form__element-label'}}) }}
+            {{ form_widget(form.debut,{'attr': {'class': 'form__element-text'}}) }}
+        </div>
+        <div class="form__element">
+            {{ form_label(form.fin,null, {'label_attr': {'class': 'form__element-label'}}) }}
+            {{ form_widget(form.fin,{'attr': {'class': 'form__element-text'}}) }}
+        </div>
+        <div class="form__boutons">
+            {{ form_widget(form.Enregistrer, {'attr': {'class': 'bouton bouton__principal form__submit'}})}}
+            {# TODO : La page précédente n'est pas forcément /affectation
+            Ce formulaire est accessible depuis plusieurs routes
+            #}
+            {% set bouton_annuler_path = path('app_affectation_index') %}
+            {{ component('bouton', {type: 'secondaire', texte: 'Annuler', href: bouton_annuler_path}) }}
+        </div>
+    {{ form_end(form) }}
+    
+</div>
 {% endblock %}
 
 

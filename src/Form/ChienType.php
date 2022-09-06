@@ -29,7 +29,7 @@ class ChienType extends AbstractType
             ->add('photo', VichImageType::class, [
                 'required' => false
             ])
-            ->add('Enregistrer', SubmitType::class)
+            ->add('enregistrer', SubmitType::class)
         ;
     }
 
