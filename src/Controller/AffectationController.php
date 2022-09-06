@@ -25,14 +25,6 @@ class AffectationController extends AbstractController
         ]);
     }
 
-    #[Route('/affectation/test', name: 'app_affectation_test')]
-    public function testQuery(): Response
-    {
-        return $this->render('affectation/test.html.twig', [
-        ]);
-    }
-
-
     #[Route('/affectation/ajouter', name: 'app_affectation_ajouter')]
     public function ajouter(Request $request, AffectationRepository $affectationRepository, ChienRepository $chienRepository, FamilleRepository $familleRepository): Response
     {
