@@ -42,39 +42,40 @@ class FamilleRepository extends ServiceEntityRepository
     }
 
     /**
-     * Renvoie les familles disponibles sur le créneau indiqué.
-     * Si l'un des paramètres est *null* les familles seront celles qui :`
-     * - Ont une/des disponibilités commençant après $début
-     * - Ont une/des disponibilités se terminant avant $fin
+     * Renvoie les familles disponibles pour accueillir un chien sur le créneau indiqué.
+     *
+     * Si l'un des paramètres est *null* les familles seront celles qui :
+     * - Ont une/des disponibilités commençant *avant* $début
+     * - Ont une/des disponibilités se terminant *après* $fin
      * @param \DateTimeImmutable|null $debut
      * @param \DateTimeImmutable|null $fin
      * @return array
      */
     public function findByDisponibilite(?\DateTimeImmutable $debut, ?\DateTimeImmutable $fin): array
     {
-        // TODO : Gérer si l'un des paramètres est null !
 
+        // Si aucune date n'est fournie, ne rien renvoyer
         if (!isset($debut) && !isset($fin)) {
             return [];
         }
 
+        // Sous-requête sélectionnant les disponibilités correspondant au créneau pour une famille
+        // les conditions sont ajoutées ci-dessous (if isset($debut)...)
         $subQuery = $this->_em->createQueryBuilder()
             ->select('dispo')
             ->from('App:Disponibilite', 'dispo')
             ->andWhere('dispo.famille = f')
-//            ->andWhere('dispo.debut <= :debut')
-//            ->andWhere('dispo.fin >= :fin')
         ;
 
-        $queryBuilder = $this->createQueryBuilder('f')
-//            ->setParameter('debut', $debut)
-//            ->setParameter('fin', $fin)
-        ;
+        // Requête sélectionnant les familles ayant au moins une disponibilité correspondant à $subQuery
+        $queryBuilder = $this->createQueryBuilder('f');
 
+        // Si le paramètre "début" est non-null, sélectionner les disponibilités commençant avant cette date
         if (isset($debut)) {
             $subQuery->andWhere('dispo.debut <= :debut');
             $queryBuilder->setParameter('debut', $debut);
         }
+        // Si le paramètre "fin" est non-null, sélectionner les disponibilités commençant avant cette date
         if (isset($fin)) {
             $subQuery->andWhere('dispo.fin >= :fin');
             $queryBuilder->setParameter('fin', $fin);

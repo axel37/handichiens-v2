@@ -1,8 +1,15 @@
 <div {{ attributes }}>
     {{ form_start(form) }}
+    {{ form_errors(form) }}
     {{ form_row(form.chien) }}
     {{ form_row(form.debut) }}
     {{ form_row(form.fin) }}
-    {{ form_row(form.famille) }}
+
+    {{ form_row(form.famille, { attr: {
+        'data-loading': 'hide'
+    }}) }}
+    <span data-loading="show">Chargement...</span>
+
+    {#    TODO : Message clarifiant l'absence de famille #}
     {{ form_end(form) }}
 </div>

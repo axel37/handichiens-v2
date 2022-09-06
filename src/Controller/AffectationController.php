@@ -6,6 +6,7 @@ use App\Entity\Affectation;
 use App\Form\AffectationType;
 use App\Repository\AffectationRepository;
 use App\Repository\FamilleRepository;
+use DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,7 +36,14 @@ class AffectationController extends AbstractController
     public function ajouter(Request $request, AffectationRepository $affectationRepository): Response
     {
         $nouvelleAffectation = new Affectation();
-        $form = $this->createForm(AffectationType::class);
+        // Dates par défaut proches d'aujourd'hui
+        $dateDebut = new DateTimeImmutable('tomorrow 10am');
+        $dateFin = new DateTimeImmutable('+2 days 6pm');
+        $nouvelleAffectation->setDebut($dateDebut);
+        $nouvelleAffectation->setFin($dateFin);
+
+        $form = $this->createForm(AffectationType::class, $nouvelleAffectation);
+
 
         $form->handleRequest($request);
 

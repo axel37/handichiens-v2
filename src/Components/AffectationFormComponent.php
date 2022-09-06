@@ -3,12 +3,7 @@
 namespace App\Components;
 
 use App\Entity\Affectation;
-use App\Entity\Famille;
 use App\Form\AffectationType;
-use App\Repository\FamilleRepository;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
@@ -24,6 +19,7 @@ class AffectationFormComponent extends AbstractController
     use ComponentWithFormTrait;
 
     #[LiveProp(fieldName: 'data')]
+    // L'Affectation passée au formulaire
     public ?Affectation $affectation = null;
 
     protected function instantiateForm(): FormInterface
