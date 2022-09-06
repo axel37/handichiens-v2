@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Affectation;
 use App\Form\AffectationType;
 use App\Repository\AffectationRepository;
+use App\Repository\ChienRepository;
 use App\Repository\FamilleRepository;
 use DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -33,17 +34,20 @@ class AffectationController extends AbstractController
 
 
     #[Route('/affectation/ajouter', name: 'app_affectation_ajouter')]
-    public function ajouter(Request $request, AffectationRepository $affectationRepository): Response
+    public function ajouter(Request $request, AffectationRepository $affectationRepository, ChienRepository $chienRepository): Response
     {
+        // Récupération des paramètres de l'url / GET : debut, fin et chien
+        // Nous renseignons des dates par défaut si aucune n'est fournies (pour éviter 01/01/20XX) dans les deux champs)
+        $dateDebut = new DateTimeImmutable($request->query->get('debut')) ?? new DateTimeImmutable('tomorrow 10am');
+        $dateFin = new DateTimeImmutable($request->query->get('fin')) ?? new DateTimeImmutable('+2 days 6pm');
+        $chien = $chienRepository->findOneById($request->query->get('chien'));
+
         $nouvelleAffectation = new Affectation();
-        // Dates par défaut proches d'aujourd'hui
-        $dateDebut = new DateTimeImmutable('tomorrow 10am');
-        $dateFin = new DateTimeImmutable('+2 days 6pm');
         $nouvelleAffectation->setDebut($dateDebut);
         $nouvelleAffectation->setFin($dateFin);
+        $nouvelleAffectation->setChien($chien);
 
         $form = $this->createForm(AffectationType::class, $nouvelleAffectation);
-
 
         $form->handleRequest($request);
 
