@@ -3,9 +3,9 @@
 {% block title %}Handi'chiens - Les chiens{% endblock %}
 
 {% block contenu %}
-    <h1>Les chiens</h1>
+    <h1 class="titre__disponibilites">Les chiens</h1>
+    
     {% set bouton_ajouter_path = path('app_chien_ajouter') %}
-
     {{ component('bouton', {href: bouton_ajouter_path, texte: 'Ajouter un chien'}) }}
 
     {% if chiens is empty %}

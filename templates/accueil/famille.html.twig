@@ -28,10 +28,10 @@
             <ul>
                 {% for disponibilite in app.user.disponibilites %}
                     <li>
-                        {% set disponibilite_path = path('app_mes_disponibilites') %}
-                        {% set calendrier_icone = asset('images/calendar-x.svg') %}
-                        {{component('carte', { href: disponibilite_path, texte: disponibilite.debut|date ~ ' - ' ~ disponibilite.fin|date, icone: calendrier_icone })}}
-                        
+                        {# {% set disponibilite_detail_path = path('app_disponibilite_details') %} #}
+                        {# {% set calendrier_icone = asset('images/calendar-x.svg') %}
+                        {{component('carte', { href: '/disponibilite/' . disponibilite.id, texte: disponibilite.debut|date ~ ' - ' ~ disponibilite.fin|date, icone: calendrier_icone })}} #}
+                        {{component('carte', { entite: disponibilite })}}
                         {# {{ disponibilite.debut|date ~ ' - ' ~ disponibilite.fin|date }} #}
                     </li>
                 {% endfor %}
