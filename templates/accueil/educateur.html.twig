@@ -4,8 +4,42 @@
 
 {% block contenu %}
 
-    <p>Vous êtes connecté en tant qu'éducateur.</p>
+    <div class="accueil">
+        <div class="accueil__contenu">
+            <h1 class="titre-_accueil">Bonjour <strong>{{ app.user.prenom ~ ' ' ~ app.user.nom }}</strong></h1>
+            <p>Vous êtes connecté en tant qu'éducateur.</p>
 
-    <p><a href="{{ path('app_deconnexion') }}">Se déconnecter.</a></p>
+            <pre>Afficher un résumé des disponibilités et affectations</pre>
+            <ul>
+                {# {% for affectation in affectations %}
+                    <li>
+                        {{ affectation.debut|date ~ ' - ' ~ affectation.fin|date }}
+                    </li>
+                {% endfor %} #}
+            </ul>
+        </div>
+
+        <div class="accueil__liens">
+            {% set chiens_path = path('app_chien_index') %}
+            {% set chien_icone = asset('images/dog.svg') %}
+            {{component('carte', { href: chiens_path, texte: 'Les Chiens', icone: chien_icone, class: 'carte__lien' })}}
+
+            {% set familles_path = path('app_famille_index') %}
+            {% set famille_icone = asset('images/famille.svg') %}
+            {{component('carte', { href: familles_path, texte: 'Les Familles Relais', icone: famille_icone, class: 'carte__lien' })}}
+        
+            {# {% set add_educ_path = path('app_profil') %}
+            {% set profile_plus_icone = asset('images/profile-plus.svg') %}
+            {{component('carte', { href: add_educ_path, texte: 'Ajouter un éducateur', icone: profile_plus_icone, class: 'carte__lien' })}} #}
+
+            {% set disponibilites_path = path('app_disponibilite_index') %}
+            {% set disponibilite_icone = asset('images/calendar.svg') %}
+            {{component('carte', { href: disponibilites_path, texte: 'Les Disponibilités', icone: disponibilite_icone, class: 'carte__lien' })}}
+
+            {% set affectations_path = path('app_affectation_index') %}
+            {% set affectation_icone = asset('images/calendar-check.svg') %}
+            {{component('carte', { href: affectations_path, texte: 'Les Affectations', icone: affectation_icone, class: 'carte__lien' })}}
+        </div>
+    </div>
 
 {% endblock %}

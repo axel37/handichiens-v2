@@ -5,14 +5,5 @@
 {% block contenu %}
     <h1>Nouvelle affectation</h1>
     {# Formulaire d'ajout d'affectation. Il est contenu dans un LiveComponent. #}
-    {{ component('affectation_form', {form: form, affectation: nouvelleAffectation.id ? affectation: null}) }}
-
-
-    {# TODO : La page précédente n'est pas forcément /affectation
-        Ce formulaire est accessible depuis plusieurs routes
-    #}
-    {% set bouton_annuler_path = path('app_affectation_index') %}
-    {{ component('bouton', {type: 'secondaire', texte: 'Annuler', href: bouton_annuler_path}) }}
+    {{ component('affectation_form', {form: form, affectation: nouvelleAffectation.id ? affectation: null}) }}    
 {% endblock %}
-
-

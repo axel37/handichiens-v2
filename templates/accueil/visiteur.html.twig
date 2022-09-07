@@ -4,10 +4,16 @@
 
 {% block contenu %}
 
-    <p>Bienvenue sur Handi'chiens v2, l'application de gestion de Handi'chiens Vineuil.</p>
+    <div class="accueil__visiteur">
+        <h1 class="titre"> Bienvenue sur Handi'chiens v2 </h1>
 
-    <p>Vous n'êtes pas authentifié.</p>
-    {% set bouton_connexion_path = path('app_connexion') %}
-    {{ component('bouton', {href: bouton_connexion_path, texte: "Se connecter"}) }}
+        <p class="accueil__visiteur--slogan">l'application de gestion de Handi'chiens Vineuil</p>
+
+        <div class="carte carte__visiteur">
+            <p>Vous êtes déjà un membre ?</p>
+            {% set bouton_connexion_path = path('app_connexion') %}
+            {{ component('bouton', {href: bouton_connexion_path, texte: "Se connecter"}) }}
+        </div>
+    </div>
 
 {% endblock %}

@@ -9,9 +9,9 @@ Les disponibilités d'une famille
 
 {% block contenu %}
 
-    <h1>
+    <h1 class="titre__disponibilites">
         {% if famille == app.user %}
-            Vos disponibilités
+            Mes disponibilités
         {% else %}
             Disponibilités de la <a
                 href="{{ path('app_famille_details', {famille: famille.id}) }}">famille {{ famille.nom }}</a>
@@ -35,7 +35,7 @@ Les disponibilités d'une famille
     {% else %}
         <ul>
             {% for dispo in famille.disponibilites %}
-                <li>
+                <li class="carte">
                     {{ dispo.debut|format_date ~ ' - ' ~ dispo.fin|format_date }}
                     {% if dispo.libelle %}
                         ({{ dispo.libelle }})

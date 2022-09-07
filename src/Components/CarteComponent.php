@@ -22,6 +22,7 @@ use Symfony\UX\TwigComponent\Attribute\ExposeInTemplate;
 #[AsTwigComponent('carte')]
 class CarteComponent
 {
+
     /**
      * Tableau représentant le texte à écrire dans le composant.
      *
@@ -47,6 +48,13 @@ class CarteComponent
     #[ExposeInTemplate]
     private array $icone;
 
+    /**
+     * Cible du style.
+     * @var string
+     */
+    #[ExposeInTemplate]
+    private ?string $class;
+
     public function __construct(UrlGeneratorInterface $urlGenerator)
     {
         // Utilisé pour générer les routes
@@ -63,6 +71,7 @@ class CarteComponent
      * @param array|string|null $texte Une ligne (string) ou un élément par ligne (array)
      * @param string|null $href La destination du lien
      * @param array|string|null $icone La/les icônes à afficher
+     * @param string|null $class La destination du style
      * @return void
      */
     public function mount(
@@ -70,6 +79,7 @@ class CarteComponent
         null|array|string                                        $texte = null,
         ?string                                                  $href = null,
         ?string                                                  $icone = null,
+        ?string                                                  $class = null,
     ): void
     {
         // Si une entité a été passée, remplacer le texte, le href et l'icône
@@ -108,6 +118,7 @@ class CarteComponent
                     $texte = ['Entité invalide'];
                     $href = '/';
                     $icone = '/';
+                    $class = 'carte__lien';
             endswitch;
         }
 
@@ -123,6 +134,7 @@ class CarteComponent
             $this->texte = $texte;
             $this->href = $href;
             $this->icone = $icone;
+            $this->class = $class;
         } catch (\TypeError $exception) {
             throw new \TypeError('Erreur lors de la création du composant CarteComponent. 
             Avez-vous passé tous les paramètres requis à son instantiation ? 
@@ -152,6 +164,14 @@ class CarteComponent
     public function getIcone(): array
     {
         return $this->icone;
+    }
+
+    /**
+     * @return string
+     */
+    public function getClass(): ?string
+    {
+        return $this->class;
     }
 
 }

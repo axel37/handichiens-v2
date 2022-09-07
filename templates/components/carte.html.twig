@@ -1,8 +1,8 @@
-<a href="{{ href }}" class="carte">
+<a href="{{ href }}" class="carte {{ class }}">
 
     <div class="carte__icones">
         {% for img in icone %}
-            <img src="{{ img }}" alt="">
+            <img class="carte__icones--image" src="{{ img }}" alt="">
         {% endfor %}
     </div>
 

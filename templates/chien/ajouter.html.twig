@@ -5,9 +5,33 @@
 {% endblock %}
 
 {% block contenu %}
-<h1>Ajouter un chien</h1>
-    {{ form(form) }}
-    {% set bouton_annuler_path = path('app_chien_index') %}
-    {{ component('bouton', {href: bouton_annuler_path, texte: 'Annuler'}) }}
+
+<div class="form">
+    <h1 class="form__titre">Ajouter un chien</h1>
+    {{ form_start(form) }}
+        <div class="form__element">
+            {{ form_label(form.nom,null, {'label_attr': {'class': 'form__element-label'}}) }}
+            {{ form_widget(form.nom,{'attr': {'class': 'form__element-text'}}) }}
+        </div>
+        <div class="form__element">
+            {{ form_label(form.dateNaissance,null, {'label_attr': {'class': 'form__element-label'}}) }}
+            {{ form_widget(form.dateNaissance,{'attr': {'class': 'form__element-date'}}) }}
+        </div>
+        <div class="form__element">
+            {{ form_label(form.race,null, {'label_attr': {'class': 'form__element-label'}}) }}
+            {{ form_widget(form.race,{'attr': {'class': 'form__element-text'}}) }}
+        </div>
+        <div class="form__element">
+            {{ form_label(form.photo,null, {'label_attr': {'class': 'form__element-label'}}) }}
+            {{ form_widget(form.photo,{'attr': {'class': 'form__element-date'}}) }}
+        </div>
+        <div class="form__boutons">
+            {{ form_widget(form.enregistrer, {'attr': {'class': 'bouton bouton__principal form__submit'}})}}
+            {% set bouton_annuler_path = path('app_chien_index') %}
+            {{ component('bouton', {type: 'secondaire', href: bouton_annuler_path, texte: "Annuler"}) }}
+            </div>
+    {{ form_end(form) }}
+</div>
+
 {% endblock %}
 

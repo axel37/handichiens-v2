@@ -30,7 +30,7 @@
 						<a class="navigation__lien" href="{{ path('app_famille_index') }}">Les Familles Relais</a>
 					</li>
 					<li>
-						<a class="navigation__lien" href="{{ path('app_affectation_index') }}">Affectations</a>
+						<a class="navigation__lien" href="{{ path('app_affectation_index') }}">Les Affectations</a>
 					</li>
 				{% elseif is_granted('ROLE_FAMILLE') %}
 					<li>
@@ -59,9 +59,9 @@
 		<div class="navigation__menu" {{ stimulus_target('navbar', 'menuList') }}>
 
 			<ul class="navigation__menu--liste">
-				<li>
+				{# <li>
 					<a class="navigation__lien" href="{{ path('app_accueil') }}">Accueil</a>
-				</li>
+				</li> #}
 				<li>
 					{% set connexion_path = path('app_connexion') %}
 					{{component('bouton', { type: 'principal', href: connexion_path, texte: 'Connexion' })}}

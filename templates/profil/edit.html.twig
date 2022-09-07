@@ -4,8 +4,53 @@
 
 {% block contenu %}
 
-    <h1>Modifier le profil</h1>
-
-    {{ form(form) }}
+    {# {{ form(form) }} #}
+    <div class="form">
+        <h1 class="form__titre">Modifier le profil</h1>
+        {{ form_start(form) }}
+            <div class="form__element">
+                {{ form_label(form.nom,null, {'label_attr': {'class': 'form__element-label'}}) }}
+                {{ form_widget(form.nom,{'attr': {'class': 'form__element-text'}}) }}
+            </div>
+            <div class="form__element">
+                {{ form_label(form.prenom,null, {'label_attr': {'class': 'form__element-label'}}) }}
+                {{ form_widget(form.prenom,{'attr': {'class': 'form__element-text'}}) }}
+            </div>
+            <div class="form__element">
+                {{ form_label(form.email,null, {'label_attr': {'class': 'form__element-label'}}) }}
+                {{ form_widget(form.email,{'attr': {'class': 'form__element-text'}}) }}
+            </div>
+            <div class="form__element">
+                {{ form_label(form.telephone,null, {'label_attr': {'class': 'form__element-label'}}) }}
+                {{ form_widget(form.telephone,{'attr': {'class': 'form__element-text'}}) }}
+            </div>
+            <div class="form__element">
+                {{ form_label(form.adresse,null, {'label_attr': {'class': 'form__element-label'}}) }}
+                {{ form_widget(form.adresse,{'attr': {'class': 'form__element-text'}}) }}
+            </div>
+            <div class="form__element">
+                {{ form_label(form.ville,null, {'label_attr': {'class': 'form__element-label'}}) }}
+                {{ form_widget(form.ville,{'attr': {'class': 'form__element-text'}}) }}
+            </div>
+            <div class="form__element">
+                {{ form_label(form.codePostal,null, {'label_attr': {'class': 'form__element-label'}}) }}
+                {{ form_widget(form.codePostal,{'attr': {'class': 'form__element-text'}}) }}
+            </div>
+            <div class="form__element">
+                {{ form_label(form.photo,null, {'label_attr': {'class': 'form__element-label'}}) }}
+                {{ form_widget(form.photo,{'attr': {'class': 'form__element-date'}}) }}
+            </div>
+            <div class="form__boutons">
+            {{ form_widget(form.enregistrer, {'attr': {'class': 'bouton bouton__principal form__submit'}})}}
+            {% if is_granted('ROLE_FAMILLE') %}
+                {% set bouton_annuler_path = path('app_profil') %}
+                {{ component('bouton', {type: 'secondaire', href: bouton_annuler_path, texte: "Annuler"}) }}
+            {% else %}
+                {% set bouton_annuler_path = path('app_disponibilite_famille', {famille: famille.id}) %}
+                {{ component('bouton', {type: 'secondaire', href: bouton_annuler_path, texte: "Annuler"}) }}
+            {% endif %}
+            </div>
+        {{ form_end(form) }}
+    </div>
 
 {% endblock %}

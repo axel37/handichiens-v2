@@ -4,20 +4,49 @@
 
 {% block contenu %}
 
-    <h1>Handi'chiens Vineuil - Accueil</h1>
+    <div class="accueil">
+        <div class="accueil__contenu">
+            <h1 class="titre__accueil">Bonjour <strong>{{ app.user.prenom ~ ' ' ~ app.user.nom }}</strong>.</h1>
+            {# TODO : Vérifier que l'utilisateur est bien de type famille pour éviter toute erreur ? #}
+            <p>Vous êtes connecté en tant que Famille Relais</p>
 
-    Bonjour <strong>{{ app.user.prenom ~ ' ' ~ app.user.nom }}</strong>.
-    {# TODO : Vérifier que l'utilisateur est bien de type famille pour éviter toute erreur ? #}
+            <h2 class="titre__secondaire">Mes Affectations</h2>
+                <ul>
+                    {% if app.user.affectations is empty %}
+                        <li><p>Aucune affectations vous a été attribué !</p></li>
+                    {% else %}
+                        {% for affectation in app.user.affectations %}
+                            <li>
+                                {{ affectation.debut|date ~ ' - ' ~ affectation.fin|date }}
+                            </li>
+                        {% endfor %}
+                    {% endif %}
+                </ul>
 
-    <pre>Afficher un résumé des disponibilités et affectations</pre>
-    <ul>
-        {% for affectation in app.user.affectations %}
-            <li>
-                {{ affectation.debut|date ~ ' - ' ~ affectation.fin|date }}
-            </li>
-        {% endfor %}
-    </ul>
+            <h2 class="titre__secondaire">Mes Disponibilités</h2>
 
-    <a href="{{ path('app_deconnexion') }}">Se déconnecter.</a>
+            <ul>
+                {% for disponibilite in app.user.disponibilites %}
+                    <li>
+                        {# {% set disponibilite_detail_path = path('app_disponibilite_details') %} #}
+                        {# {% set calendrier_icone = asset('images/calendar-x.svg') %}
+                        {{component('carte', { href: '/disponibilite/' . disponibilite.id, texte: disponibilite.debut|date ~ ' - ' ~ disponibilite.fin|date, icone: calendrier_icone })}} #}
+                        {{component('carte', { entite: disponibilite })}}
+                        {# {{ disponibilite.debut|date ~ ' - ' ~ disponibilite.fin|date }} #}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="accueil__liens">
+            {% set disponibilite_path = path('app_mes_disponibilites') %}
+            {% set calendrier_icone = asset('images/calendar.svg') %}
+            {{component('carte', { href: disponibilite_path, texte: 'Mes Disponibilités', icone: calendrier_icone, class: 'carte__lien' })}}
+
+            {% set profile_path = path('app_profil') %}
+            {% set profile_icone = asset('images/profile.svg') %}
+            {{component('carte', { href: profile_path, texte: 'Mon Profil', icone: profile_icone, class: 'carte__lien' })}}
+        </div>
+    </div>
 
 {% endblock %}
