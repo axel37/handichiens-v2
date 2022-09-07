@@ -23,6 +23,8 @@
 
 .DS_Store
 /public/uploads/
+/public/images/chiens
+/public/images/utilisateurs
 
 ### VS Code - Source : https://github.com/github/gitignore/blob/main/Global/VisualStudioCode.gitignore
 .vscode/*
