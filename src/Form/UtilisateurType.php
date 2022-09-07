@@ -66,7 +66,7 @@ class UtilisateurType extends AbstractType
 
             
         $builder
-            ->add('Enregistrer', SubmitType::class);
+            ->add('enregistrer', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
