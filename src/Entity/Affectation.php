@@ -30,9 +30,6 @@ class Affectation
     #[Assert\GreaterThan(propertyPath: 'debut')]
     private ?\DateTimeImmutable $fin = null;
 
-    #[ORM\Column]
-    private ?bool $estConfirme = false;
-
     #[ORM\ManyToOne(inversedBy: 'affectations')]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotBlank]
@@ -42,6 +39,9 @@ class Affectation
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotBlank]
     private ?Famille $famille = null;
+
+    #[ORM\Column(options: ['default' => false])]
+    private ?bool $confirme = false;
 
     /**
      * Chaîne de caractères contenant :
@@ -68,7 +68,7 @@ class Affectation
         }
         $resultat .= ' - ' . $this->fin->format($format);
 
-        if (!$this->estConfirme) {
+        if (!$this->confirme) {
             $resultat .= ' (Non confirmé)';
         }
 
@@ -104,18 +104,6 @@ class Affectation
         return $this;
     }
 
-    public function isEstConfirme(): ?bool
-    {
-        return $this->estConfirme;
-    }
-
-    public function setEstConfirme(bool $estConfirme): self
-    {
-        $this->estConfirme = $estConfirme;
-
-        return $this;
-    }
-
     public function getChien(): ?Chien
     {
         return $this->chien;
@@ -136,6 +124,18 @@ class Affectation
     public function setFamille(?Famille $famille): self
     {
         $this->famille = $famille;
+
+        return $this;
+    }
+
+    public function isConfirme(): ?bool
+    {
+        return $this->confirme;
+    }
+
+    public function setConfirme(bool $confirme): self
+    {
+        $this->confirme = $confirme;
 
         return $this;
     }
