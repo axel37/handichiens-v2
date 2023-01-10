@@ -75,10 +75,10 @@ class AffectationController extends AbstractController
     #[Route('/affectation/{affectation}/supprimer',  name: 'app_affectation_supprimer')]
     public function supprimer(Affectation $affectation, AffectationRepository $affectationRepository): Response
     {
-        if ($affectation->isConfirme())
-        {
+        if ($affectation->isConfirme()) {
             // TODO : Notifier la famille
         }
+
         $affectationRepository->remove($affectation, true);
         $this->addFlash('success', 'L\'affectation a été supprimée');
 

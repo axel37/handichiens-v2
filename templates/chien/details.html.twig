@@ -7,8 +7,50 @@
 {% block contenu %}
     <a href="{{ path('app_chien_index') }}">Voir tous les chiens</a>
 
-    <h1>Chien - {{ chien.nom }}</h1>
-    {{ dump(chien) }}
+    <h1>{{ chien.nom }}</h1>
+
+    <img src="{{ asset('images/chiens/' ~ chien.photoFileName) }}" alt="photo de {{ chien.nom }}">
+
+    <aside>
+        <dl>
+            <dt>Né le :</dt>
+            <dd>{{ chien.dateNaissance | date('d/m/Y') }}</dd>
+        </dl>
+
+        <hr>
+
+        <table>
+            <caption>Affectations de {{  chien.nom }}</caption>
+
+            <thead>
+                <tr>
+                    <th>Statut</th>
+                    <th>Famille</th>
+                    <th>Du</th>
+                    <th>Au</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+            {% for affectation in chien.affectations | sort((a,b) => b.debut <=> a.debut) %}
+                <tr style="{{ affectation.confirme ?: 'color: orange;' }}">
+                    <td>
+                        {% if affectation.confirme %}
+                            ✅ Confirmé
+                            {%  else %}
+                            A confirmer
+                        {% endif %}
+                    </td>
+                    <td>{{ affectation.famille.nom }} {{ affectation.famille.prenom }}</td>
+                    <td>{{ affectation.debut | date('d/m/y H:i') }}</td>
+                    <td>{{ affectation.fin | date('d/m/y H:i') }}</td>
+                    <td><a href="{{ path('app_affectation_details', {'affectation': affectation.id}) }}">Détails</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </aside>
 
     {% set bouton_modifier_path = path('app_chien_modifier', {chien: chien.id}) %}
     {{ component('bouton', { href: bouton_modifier_path, texte: "Modifier" }) }}

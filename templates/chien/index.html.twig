@@ -11,11 +11,25 @@
     {% if chiens is empty %}
         <p>Aucun chien !</p>
     {% else %}
-        <ul>
-            {% for chien in chiens %}
-                <li><a href="{{ path('app_chien_details', {chien: chien.id}) }}">{{ chien.nom }}</a></li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+        <table>
+            <caption>Liste des chiens</caption>
 
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Date de naissance</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            {% for chien in chiens %}
+                <tr>
+                    <td>{{ chien.nom }}</td>
+                    <td>{{ chien.dateNaissance | date('d/m/y') }}</td>
+                    <td><a href="{{ path('app_chien_details', {chien: chien.id}) }}">Détails</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
 {% endblock %}
